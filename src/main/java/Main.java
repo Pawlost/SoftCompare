@@ -47,59 +47,41 @@ public class Main {
             Element newElements = newDiff.body().getAllElements().first();
 
             while (oldElements.children().size() > 0) {
-                HashMap<String, String> changeIndexes = new HashMap<>();
 
                 while (oldElements.children().size() > 0 && newElements.children().size() > 0) {
-                    if (oldElements.children().size() > newElements.children().size()) {
-                        while (oldElements.children().size() > newElements.children().size()) {
-                            System.out.println("stary" + oldElements.children().size());
-                            System.out.println("novy" + newElements.children().size());
-                            oldElements = oldElements.child(0);
-                        }
-                        System.out.println("True");
-                        changeIndexes.put(oldElements.tagName(), "<font color='orange'>" + oldElements.tagName() + "</font>");
-                        Element safe = oldElements.child(0).clone();
-                        oldElements = oldElements.parent();
-                        oldElements.child(0).remove();
-                        oldElements.append(safe.toString());
-
-                    } else if (oldElements.children().size() < newElements.children().size()) {
-                        while (oldElements.children().size() < newElements.children().size()) {
-                            System.out.println("stary" + oldElements.children().size());
-                            System.out.println("novy" + newElements.children().size());
-                            newElements = newElements.child(0);
-                        }
-                        System.out.println("True");
-                        changeIndexes.put(newElements.tagName(), "<font color='orange'>" + newElements.tagName() + "</font>");
-                        Element safe = newElements.child(0).clone();
-                        newElements = newElements.parent();
-                        newElements.child(0).remove();
-                        newElements.append(safe.toString());
-                    }
-
                     oldElements = oldElements.child(0);
                     newElements = newElements.child(0);
                 }
 
+                if (oldElements.children().size() > 0) {
+                    while (oldElements.children().size() > 0) {
+                        oldElements.append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
+                        oldElements = oldElements.child(0);
+                    }
+                    if(!oldElements.tagName().equals(newElements.tagName())){
+                        oldElements.append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
+                        if(!oldElements.text().equals(newElements.text())){
+                            oldElements.append("<font color='orange'>[" + oldElements.text() + "]</font>");
+                        }
+                    }
+                } else if (newElements.children().size() > 0) {
+                    oldElements.prepend("<font color='orange'>" + newElements.tagName() + "</font>");
+                    oldElements = oldElements.child(0);
+                }
+
                 while (oldElements.parent() != null && !oldElements.tagName().equals("body")) {
                     oldElements = oldElements.parent();
+                }
+
+                while (newElements.parent() != null && !newElements.tagName().equals("body")) {
                     newElements = newElements.parent();
                 }
 
-                Element change = oldElements.child(0).clone();
-
-                for (Element tag : change.getAllElements()) {
-                    if (changeIndexes.get(tag.tagName()) != null) {
-                        change.append(changeIndexes.get(tag.tagName()));
-                        changeIndexes.remove(tag.tagName());
-                    }
-                }
-
-                difference.append(change.toString());
-                if (oldElements.children().size() > 0) {
+                difference.append(oldElements.child(0).toString());
+                if(oldElements.children().size() > 0) {
                     oldElements.child(0).remove();
                 }
-                if (newElements.children().size() > 0) {
+                if(newElements.children().size() > 0) {
                     newElements.child(0).remove();
                 }
             }
