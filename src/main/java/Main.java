@@ -59,9 +59,12 @@ public class Main {
                         oldElements = oldElements.child(0);
                     }
                     if(!oldElements.tagName().equals(newElements.tagName())){
-                        oldElements.append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
                         if(!oldElements.text().equals(newElements.text())){
-                            oldElements.append("<font color='orange'>[" + oldElements.text() + "]</font>");
+                            Element help = oldElements.clone();
+                            oldElements = oldElements.parent();
+                            oldElements.child(0).remove();
+                            oldElements.append("<"+help.tagName()+"><font color='red'>[" + help.text() + "]</font>" +
+                                    "<"+help.tagName()+">");
                         }
                     }
                 } else if (newElements.children().size() > 0) {
