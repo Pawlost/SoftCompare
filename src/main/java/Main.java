@@ -6,6 +6,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.File;
 import java.io.IOException;
@@ -47,51 +48,22 @@ public class Main {
             Element newElements = newDiff.body().getAllElements().first();
 
             while (oldElements.children().size() > 0) {
-
                 while (oldElements.children().size() > 0 && newElements.children().size() > 0) {
                     oldElements = oldElements.child(0);
                     newElements = newElements.child(0);
-
-                    if(oldElements.children().size() > newElements.children().size()){
-                        for(int index = 0; index < newElements.children().size(); index++){
-                            oldElements = oldElements.child(index);
-                            newElements = newElements.child(index);
-
-                            while (oldElements.children().size() > 0 && ) {
-                                oldElements = oldElements.child(0);
-                                oldElements.parent().append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
-                            }
-
-                            if (!oldElements.ownText().equals(newElements.ownText())) {
-                                Element help = oldElements.clone();
-                                oldElements = oldElements.parent();
-                                oldElements.child(0).remove();
-                                oldElements.append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
-                                        "</" + help.tagName() + ">");
-                            }
-                        }
-                    }
                 }
 
-
-                if (oldElements.children().size() > 0) {
+                while (oldElements.children().size() > 0) {
                     oldElements = oldElements.child(0);
                     oldElements.parent().append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
                 }
-                if (newElements.children().size() > 0) {
-                    while (oldElements.children().size() > 0) {
-                        newElements = newElements.child(0);
-                    }
-                       // oldElements.prepend("<font color='orange'>" + newElements.tagName() + "</font>");
-                    //oldElements = oldElements.child(0);
-                }
 
                 if (!oldElements.ownText().equals(newElements.ownText())) {
-                        Element help = oldElements.clone();
-                        oldElements = oldElements.parent();
-                        oldElements.child(0).remove();
-                        oldElements.append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
-                                "</" + help.tagName() + ">");
+                    Element help = oldElements.clone();
+                    oldElements = oldElements.parent();
+                    oldElements.child(0).remove();
+                    oldElements.append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
+                            "</" + help.tagName() + ">");
                     if(newElements.hasText()){
                         oldElements.append("<" + newElements.tagName() + "><font color='green'>[" + newElements.ownText() +
                                 "]</font>" + "</" + newElements.tagName() + ">");
