@@ -6,7 +6,6 @@
       <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/difference.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/difference.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/Nothing.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/Nothing.java" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -18,11 +17,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="Main.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="Main.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="194">
-              <caret line="96" column="82" lean-forward="true" selection-start-line="96" selection-start-column="82" selection-end-line="96" selection-end-column="82" />
+            <state relative-caret-position="221">
+              <caret line="133" column="72" selection-start-line="133" selection-start-column="72" selection-end-line="133" selection-end-column="72" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -39,26 +38,17 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="difference.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="difference.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/difference.html">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="285">
-              <caret line="31" column="9" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="9" />
+              <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
               <folding>
-                <element signature="e#70#76#0" expanded="true" />
-                <element signature="e#78#84#0" expanded="true" />
-                <element signature="e#247#253#0" expanded="true" />
-                <element signature="e#1441#1447#0" expanded="true" />
+                <element signature="e#165#171#0" expanded="true" />
+                <element signature="e#181#187#0" expanded="true" />
+                <element signature="e#1066#1072#0" expanded="true" />
+                <element signature="e#1074#1080#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="chapter2.html" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="210">
-              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -68,6 +58,15 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="30">
               <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="chapter2.html" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="210">
+              <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
             </state>
           </provider>
         </entry>
@@ -268,14 +267,14 @@
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" order="4" />
       <window_info anchor="bottom" id="Version Control" order="9" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.33064517" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.33064517" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Designer" order="2" />
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info id="Favorites" order="3" side_tool="true" />
-      <window_info anchor="bottom" id="Debug" order="3" weight="0.3983871" />
+      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3983871" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
@@ -289,7 +288,15 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="6" />
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/Main.java</url>
+          <line>73</line>
+          <properties />
+          <option name="timeStamp" value="7" />
+        </line-breakpoint>
+      </breakpoints>
+      <option name="time" value="8" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -627,23 +634,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/chapter1.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="210">
-          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/util/ArrayList.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2535">
+        <state relative-caret-position="108">
           <caret line="191" selection-start-line="191" selection-end-line="191" />
         </state>
       </provider>
@@ -655,25 +648,39 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+    <entry file="file://$PROJECT_DIR$/resources/difference.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="194">
-          <caret line="96" column="82" lean-forward="true" selection-start-line="96" selection-start-column="82" selection-end-line="96" selection-end-column="82" />
+        <state relative-caret-position="285">
+          <caret line="35" column="5" selection-start-line="35" selection-start-column="5" selection-end-line="35" selection-end-column="5" />
           <folding>
-            <element signature="imports" expanded="true" />
+            <element signature="e#165#171#0" expanded="true" />
+            <element signature="e#181#187#0" expanded="true" />
+            <element signature="e#1066#1072#0" expanded="true" />
+            <element signature="e#1074#1080#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/resources/difference.html">
+    <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="285">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="2" selection-end-line="31" selection-end-column="9" />
+        <state relative-caret-position="210">
+          <caret line="14" column="62" selection-start-line="14" selection-start-column="62" selection-end-line="14" selection-end-column="62" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources/chapter1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="7" selection-start-line="2" selection-start-column="7" selection-end-line="2" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="133" column="72" selection-start-line="133" selection-start-column="72" selection-end-line="133" selection-end-column="72" />
           <folding>
-            <element signature="e#70#76#0" expanded="true" />
-            <element signature="e#78#84#0" expanded="true" />
-            <element signature="e#247#253#0" expanded="true" />
-            <element signature="e#1441#1447#0" expanded="true" />
+            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

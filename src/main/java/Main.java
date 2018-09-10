@@ -1,12 +1,9 @@
 package main.java;
 
-import jdk.nashorn.internal.objects.NativeUint16Array;
 import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.File;
 import java.io.IOException;
@@ -51,23 +48,78 @@ public class Main {
             ArrayList<Element> newChildren = new ArrayList<>();
 
             oldChildren.add(oldDiff.body().clone());
+            newChildren.add(newDiff.body().clone());
+
             oldEArray.add((ArrayList<Element>) oldChildren.clone());
+            newEArray.add((ArrayList<Element>) oldChildren.clone());
 
             int childrenSize = oldEArray.get(oldEArray.size()-1).size();
-            System.out.println(childrenSize);
 
-            while (oldEArray.size() > 1) {
+            while (oldEArray.size() > 0) {
                 while (childrenSize > 0) {
                     oldChildren = new ArrayList<>();
                     Element element = oldEArray.get(oldEArray.size() - 1).get(childrenSize - 1);
                     for (int index = 0; index < element.children().size() - 1; index++) {
                         oldChildren.add(element.child(index).clone());
                         element.child(index).remove();
-                        System.out.println(index);
                     }
                     oldEArray.add((ArrayList<Element>) oldChildren.clone());
                     childrenSize = oldEArray.get(oldEArray.size() - 1).size();
                 }
+
+                childrenSize = oldEArray.get(oldEArray.size()-1).size();
+
+                System.out.println(oldEArray);
+
+                /*
+                while (childrenSize > 0) {
+                    newChildren = new ArrayList<>();
+                    Element element = newEArray.get(newEArray.size() - 1).get(childrenSize - 1);
+                    for (int index = 0; index < element.children().size() - 1; index++) {
+                        newChildren.add(element.child(index).clone());
+                        element.child(index).remove();
+                    }
+                    newEArray.add((ArrayList<Element>) newChildren.clone());
+                    childrenSize = newEArray.get(newEArray.size() - 1).size();
+                }
+
+
+                oldChildren = oldEArray.get(oldEArray.size() - 1);
+                newChildren = newEArray.get(newEArray.size() - 1);
+
+                if(oldChildren.size() > 1 && newChildren.size() > 1){
+                    for(int in = 0; in < newChildren.size(); in ++){
+                        if (!oldChildren.get(in).tagName().equals(newChildren.get(in).tagName())){
+                            Element help = oldChildren.get(in).clone();
+                            oldChildren.get(in).remove();
+                            help.append( "<font color='red'>[" + help.tagName()+"][" + help.ownText() + "]["+ help.tagName()
+                                    +"</font>");
+                        }
+
+                        if(!oldChildren.get(in).ownText().equals(newChildren.get(in).ownText())){
+                            Element help = oldChildren.get(in).clone();
+                            oldChildren.get(in).remove();
+                            help.append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
+                                    "</" + help.tagName() + ">");
+                        }
+                    }
+                }else if (oldChildren.size() > 0 && newChildren.size() > 0){
+                    if (!oldChildren.get(0).tagName().equals(newChildren.get(0).tagName())){
+                        Element help = oldChildren.get(0).clone();
+                        oldChildren.get(0).remove();
+                        oldChildren.get(0).append( "<font color='red'>[" + help.tagName()+"][" + help.ownText() + "]["+ help.tagName()
+                                +"</font>");
+                    }
+
+                    if(!oldChildren.get(0).ownText().equals(newChildren.get(0).ownText())){
+                        Element help = oldChildren.get(0).clone();
+                        oldChildren.get(0).remove();
+                        oldChildren.get(0).append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
+                                "</" + help.tagName() + ">");
+                    }
+                }*/
+
+                System.out.println(oldEArray.size());
 
                 oldChildren = oldEArray.get(oldEArray.size() - 1);
                 if (oldChildren.size() > 0) {
@@ -79,10 +131,9 @@ public class Main {
                         oldChildren = oldEArray.get(0);
                     }
                     if (oldChildren.size() > 1) {
-                        oldChildren.get(oldChildren.size() - 1).append(clone.toString());
+                        oldChildren.get(oldChildren.size() - 1).prepend(clone.toString());
                     } else {
-                        System.out.println(oldEArray.size());
-                        oldChildren.get(0).append(clone.toString());
+                        oldChildren.get(0).prepend(clone.toString());
                     }
                     oldChildren = oldEArray.get(oldEArray.size() - 1);
                     if (oldChildren.size() <= 0) {
@@ -91,10 +142,15 @@ public class Main {
                 } else {
                     oldEArray.remove(oldEArray.size() - 1);
                 }
+
+                if(oldEArray.size() <= 1){
+                    difference.append(oldEArray.get(0).get(0).clone().toString());
+                    oldEArray.remove(0);
+                }
             }
         }
 
-        createFile(tempPath + "/difference.html", oldEArray.get(0).get(0).html());
+        createFile(tempPath + "/difference.html", difference.html());
         System.out.println("Soft compare done");
     }
 
