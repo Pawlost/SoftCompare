@@ -37,6 +37,9 @@ public class Main {
                                    String tempPath) throws IOException {
 
         System.out.println("Starting soft compare");
+        ArrayList<ArrayList<Element>> oldEArray = new ArrayList<>();
+        ArrayList<ArrayList<Element>> newEArray = new ArrayList<>();
+
         Document difference = Jsoup.parse("");
         int chaptersSize = (oldHTMLChapters.size() <= newHTMLChapters.size() ? newHTMLChapters.size() : oldHTMLChapters.size());
 
@@ -44,82 +47,55 @@ public class Main {
             Document oldDiff = oldHTMLChapters.get(i);
             Document newDiff = newHTMLChapters.get(i);
 
-            Element oldElements = oldDiff.body().getAllElements().first();
-            Element newElements = newDiff.body().getAllElements().first();
+            ArrayList<Element> oldChildren = new ArrayList<>();
+            ArrayList<Element> newChildren = new ArrayList<>();
 
-            while (oldElements.children().size() > 0) {
-                while (oldElements.children().size() > 0 && newElements.children().size() > 0) {
-                    oldElements = oldElements.child(0);
-                    newElements = newElements.child(0);
-                }
+            oldChildren.add(oldDiff.body().clone());
+            oldEArray.add((ArrayList<Element>) oldChildren.clone());
 
-                while (oldElements.children().size() > 0) {
-                    oldElements = oldElements.child(0);
-                    oldElements.parent().append("<font color='orange'>[" + oldElements.tagName() + "]</font>");
-                }
+            int childrenSize = oldEArray.get(oldEArray.size()-1).size();
+            System.out.println(childrenSize);
 
-                if (!oldElements.ownText().equals(newElements.ownText())) {
-                    Element help = oldElements.clone();
-                    oldElements = oldElements.parent();
-                    oldElements.child(0).remove();
-                    oldElements.append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
-                            "</" + help.tagName() + ">");
-                    if(newElements.hasText()){
-                        oldElements.append("<" + newElements.tagName() + "><font color='green'>[" + newElements.ownText() +
-                                "]</font>" + "</" + newElements.tagName() + ">");
+            while (oldEArray.size() > 1) {
+                while (childrenSize > 0) {
+                    oldChildren = new ArrayList<>();
+                    Element element = oldEArray.get(oldEArray.size() - 1).get(childrenSize - 1);
+                    for (int index = 0; index < element.children().size() - 1; index++) {
+                        oldChildren.add(element.child(index).clone());
+                        element.child(index).remove();
+                        System.out.println(index);
                     }
+                    oldEArray.add((ArrayList<Element>) oldChildren.clone());
+                    childrenSize = oldEArray.get(oldEArray.size() - 1).size();
                 }
 
-                while (oldElements.parent() != null && !oldElements.tagName().equals("body")) {
-                    oldElements = oldElements.parent();
-                }
-
-                while (newElements.parent() != null && !newElements.tagName().equals("body")) {
-                    newElements = newElements.parent();
-                }
-
-                difference.append(oldElements.child(0).toString());
-                if(oldElements.children().size() > 0) {
-                    oldElements.child(0).remove();
-                }
-                if(newElements.children().size() > 0) {
-                    newElements.child(0).remove();
+                oldChildren = oldEArray.get(oldEArray.size() - 1);
+                if (oldChildren.size() > 0) {
+                    Element clone = oldChildren.get(oldChildren.size() - 1).clone();
+                    oldChildren.remove(oldChildren.size() - 1);
+                    if (oldEArray.size() > 1) {
+                        oldChildren = oldEArray.get(oldEArray.size() - 2);
+                    } else {
+                        oldChildren = oldEArray.get(0);
+                    }
+                    if (oldChildren.size() > 1) {
+                        oldChildren.get(oldChildren.size() - 1).append(clone.toString());
+                    } else {
+                        System.out.println(oldEArray.size());
+                        oldChildren.get(0).append(clone.toString());
+                    }
+                    oldChildren = oldEArray.get(oldEArray.size() - 1);
+                    if (oldChildren.size() <= 0) {
+                        oldEArray.remove(oldEArray.size() - 1);
+                    }
+                } else {
+                    oldEArray.remove(oldEArray.size() - 1);
                 }
             }
         }
 
-        createFile(tempPath + "/difference.html", difference.html());
+        createFile(tempPath + "/difference.html", oldEArray.get(0).get(0).html());
         System.out.println("Soft compare done");
-    }
-
-    //creates colored changes
-    private static Document editDiffText(Document diffChapter, String type) {
-        switch (type) {
-            case "removed":
-                for (Element edited : diffChapter.select("body")) {
-                    String html = edited.html();
-                    edited.remove();
-                    diffChapter.append("<font color='red'><del>" + html + "</del></font>");
-                }
-                break;
-
-            case "created":
-                for (Element edited : diffChapter.select("body")) {
-                    String html = edited.html();
-                    edited.remove();
-                    diffChapter.append("<font color='green'>" + html + "</font>");
-                }
-                break;
-
-            case "tag":
-                for (Element edited : diffChapter.select("body")) {
-                    String html = edited.html();
-                    edited.remove();
-                    diffChapter.append("<font color='orange'>" + html + "</font>");
-                }
-                break;
-        }
-        return diffChapter.clone();
     }
 
     public static void createFile(String filePath, String text) throws IOException {

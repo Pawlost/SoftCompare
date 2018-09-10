@@ -14,9 +14,7 @@ public class Nothing {
 
                 try {
 
-            int oldSize = oldDiff.body().getAllElements().size();
-
-            int newSize = newDiff.body().getAllElements().size();
+            ize();
 
              if(!element.tagName().equals("body") && !element.tagName().equals("head")) {
                             if (element.hasText()) {
