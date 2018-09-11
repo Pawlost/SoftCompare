@@ -8,8 +8,6 @@ import org.jsoup.nodes.Element;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
 import java.util.HashMap;
 
 public class Main {
@@ -55,35 +53,82 @@ public class Main {
             oldEArray.add((ArrayList<Element>) oldChildren.clone());
             newEArray.add((ArrayList<Element>) newChildren.clone());
 
-            int childrenIndex = oldEArray.get(oldEArray.size() -1).size() - 1;
-            Element oldElement = oldEArray.get(oldEArray.size() -1).get(childrenIndex);
-            Element newElement = oldEArray.get(oldEArray.size() -1).get(childrenIndex);
+            Element oldElement = oldEArray.get(0).get(0).child(0);
+            Element newElement = newEArray.get(0).get(0).child(0);
 
-            while (oldEArray.size() > 0) {
+            while (oldEArray.get(0).get(0).children().size() > 0) {
 
-                while (oldElement.children().size() > 0 && newElement.children().size() > 0){
+                while (oldElement.children().size() > 0) {
                     oldChildren = new ArrayList<>();
                     newChildren = new ArrayList<>();
 
-                    if(oldElement.children().size() > 1) {
-                        for(int index=0; index < oldElement.children().size(); index++) {
-                            oldChildren.add(oldElement.child(index));
+                    if (oldElement.children().size() > 1) {
+                        for (int index = 0; index < oldElement.children().size(); index++) {
+                            oldChildren.add(oldElement);
                         }
                         oldEArray.add(oldChildren);
                         oldChildren = new ArrayList<>();
                         oldElement = oldElement.child(0);
                         oldChildren.add(oldElement);
-                    }else if(newElement.children().size() > 1){
-                        for(int index=0; index < newElement.children().size(); index++) {
+
+                    } else if (newElement.children().size() > 1) {
+                        for (int index = 0; index < newElement.children().size(); index++) {
                             newChildren.add(newElement.child(index));
                         }
                         newEArray.add(newChildren);
                         newChildren = new ArrayList<>();
                         newElement = newElement.child(0);
                         newChildren.add(newElement);
-                    }else{
-                        newChildren.add(newElement.child(0));
-                        newElement = newElement.child(0);
+
+                    } else {
+                        if (oldElement.children().size() > newElement.children().size()) {
+                            if(newElement.children().size() <= 0) {
+
+                                while (oldElement.children().size() > 0) {
+                                    oldElement = oldElement.child(0);
+                                    oldElement.parent().append("<font class='FancyDiff'" +
+                                            " color='orange'>[" + oldElement.tagName() + "]</font>");
+                                }
+
+                                Element help = oldElement.clone();
+                                oldElement = oldElement.parent();
+                                oldElement.child(0).remove();
+
+                                if (help.hasText() && !newElement.hasText()) {
+                                    oldElement.append("<" + help.tagName() + "><font class='FancyDiff'" +
+                                            " color='red'>[" + help.ownText() + "]</font></" + help.tagName() + ">");
+                                } else {
+                                    oldElement.parent().append("<font class='FancyDiff' color='red'>[" + help.tagName() + "]</font>");
+                                }
+
+                                newElement.append(help.toString());
+                            }
+                        }else if (!oldElement.ownText().equals(newElement.ownText())) {
+
+                            while (oldElement.children().size() > 0) {
+                                oldElement = oldElement.child(0);
+                            }
+
+                            while (newElement.children().size() > 0) {
+                                newElement = newElement.child(0);
+                            }
+
+                            Element help = oldElement.clone();
+                            oldElement = oldElement.parent();
+                            oldElement.child(0).remove();
+                            oldElement.append("<" + help.tagName() + "><font class='FancyDiff' color='red'>[" + help.ownText()
+                                    + "]</font></" + help.tagName() + ">");
+                            if (newElement.hasText()) {
+                                oldElement.append("<" + newElement.tagName() + "><font class='FancyDiff' color='green'>["
+                                        + newElement.ownText() + "]</font></" + newElement.tagName() + ">");
+                            }
+                            oldElement = oldElement.child(0);
+                        }
+
+                        if(newElement.children().size() > 0) {
+                            newChildren.add(newElement.child(0));
+                            newElement = newElement.child(0);
+                        }
 
                         oldChildren.add(oldElement.child(0));
                         oldElement = oldElement.child(0);
@@ -93,29 +138,46 @@ public class Main {
                     newEArray.add(newChildren);
                 }
 
-                for(int array=1; array < oldEArray.size(); array++) {
+                for (int array = 1; array < oldEArray.size(); array++) {
                     if (oldEArray.size() > 1) {
                         if (oldEArray.get(array).size() <= 1) {
                             oldEArray.remove(array);
-                        } else {
-                            oldEArray.get(array).remove(0);
-                        }
-                    }
-                }
-
-                for(int array=1; array < newEArray.size(); array++) {
-                    if (newEArray.size() > 1) {
-                        if (newEArray.get(array).size() <= 1) {
                             newEArray.remove(array);
                         } else {
-                            newEArray.get(array).remove(0);
+                            for (int ind = 0; ind < oldEArray.get(array).size(); ind++) {
+                                if (oldEArray.get(array).get(ind).className().equals("FancyDiff")) {
+                                    oldEArray.get(array).remove(ind);
+                                }
+                            }
+
+                            if(newEArray.get(array).size() > 1) {
+                                newEArray.get(array).remove(0);
+                            }
+
+                            if(oldEArray.get(array).size() > 1) {
+                                oldEArray.get(array).remove(0);
+                                array = oldEArray.size();
+                            }
                         }
                     }
                 }
 
-                if (newEArray.size() <= 1) {
-                    difference.append(oldEArray.get(0).get(0).clone().toString());
-                    oldEArray.remove(0);
+                if (oldEArray.size() <= 1) {
+                    difference.append(oldEArray.get(0).get(0).child(0).clone().toString());
+                    oldEArray.get(0).get(0).child(0).remove();
+
+                    for(int ri = 1; ri < newEArray.size(); ri++) {
+                       newEArray.remove(ri);
+                    }
+                    newEArray.get(0).get(0).child(0).remove();
+
+                    if(oldEArray.get(0).get(0).children().size()>0){
+                        oldElement = oldEArray.get(0).get(0).child(0);
+                    }
+
+                    if(newEArray.get(0).get(0).children().size()>0){
+                        newElement = newEArray.get(0).get(0).child(0);
+                    }
                 }
             }
         }
