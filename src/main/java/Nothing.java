@@ -2,6 +2,45 @@ package main.java;
 
 public class Nothing {
 
+             /*
+                        if (oldA.size() > 0 && newA.size() > 0) {
+                            System.out.println("here");
+                            for (int in = 0; in < newA.size(); in++) {
+                                if (!oldA.get(in).tagName().equals(newA.get(in).tagName())) {
+                                    Element help = oldA.get(in);
+                                    oldA.get(in).append("<font color='red'>[" + help.tagName() + "][" + help.ownText()
+                                            + "][" + help.tagName() + "]</font>");
+                                   // oldA.get(in).parent().child(0).remove();
+                                    System.out.println("ok pico1");
+                                }
+
+                                if (!oldA.get(in).ownText().equals(newA.get(in).ownText())) {
+                                    Element help = oldA.get(in);
+                                    oldA.get(in).append("<" + help.tagName() + "><font color='red'>[" + help.ownText()
+                                            + "]</font>" + "</" + help.tagName() + ">");
+                                  //  oldA.get(in).parent().child(0).remove();
+                                    System.out.println("ok pico2");
+                                }
+                            }
+                        } else if (oldA.size() > 0 && newA.size() > 0) {
+                            if (!oldA.get(0).tagName().equals(newA.get(0).tagName())) {
+                                Element help = oldA.get(0).clone();
+                                oldA.get(0).remove();
+                                oldA.get(0).append("<font color='red'>[" + help.tagName() + "][" + help.ownText() + "][" + help.tagName()
+                                        + "</font>");
+                                System.out.println("ok pico3");
+                            }
+
+                            if (!oldA.get(0).ownText().equals(newA.get(0).ownText())) {
+                                Element help = oldA.get(0).clone();
+                                oldA.get(0).remove();
+                                oldA.get(0).append("<" + help.tagName() + "><font color='red'>[" + help.ownText() + "]</font>" +
+                                        "</" + help.tagName() + ">");
+                                System.out.println("ok pico4");
+                            }
+                        }*/
+
+
                 /*
 
                                 int oldSize = oldElements.children().size();
