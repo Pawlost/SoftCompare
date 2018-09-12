@@ -35,12 +35,15 @@ public class Main {
                                    String tempPath) throws IOException {
 
         System.out.println("Starting soft compare");
+
+        //Preparing
         ArrayList<ArrayList<Element>> oldEArray = new ArrayList<>();
         ArrayList<ArrayList<Element>> newEArray = new ArrayList<>();
 
         Document difference = Jsoup.parse("");
         int chaptersSize = (oldHTMLChapters.size() <= newHTMLChapters.size() ? newHTMLChapters.size() : oldHTMLChapters.size());
 
+        //Dividing to chapters
         for (int i = 1; i <= chaptersSize; i++) {
             Document oldDiff = oldHTMLChapters.get(i);
             Document newDiff = newHTMLChapters.get(i);
@@ -54,11 +57,45 @@ public class Main {
             oldEArray.add((ArrayList<Element>) oldChildren.clone());
             newEArray.add((ArrayList<Element>) newChildren.clone());
 
-            Element oldElement = oldEArray.get(0).get(0).child(0);
-            Element newElement = newEArray.get(0).get(0).child(0);
+            Element oldElement = oldEArray.get(0).get(0);
+            Element newElement = newEArray.get(0).get(0);
 
-            while (oldEArray.size() > 0) {
+            //check if there is correct number of main elements
+            if (newElement.children().size() == 0){
+                oldElement.children().wrap("<font class='FancyDiff' color='red'>");
+                difference.append(oldElement.toString());
+            }else if(oldElement.children().size() > newElement.children().size()){
+                for(int ind = 0; ind < oldElement.children().size(); ind ++){
+                    if(newElement.children().size() > ind) {
+                        if (!oldElement.child(ind).tagName().equals(newElement.child(ind).tagName())) {
 
+                            oldElement.append("<font class='FancyDiff' color='red'>[" +
+                                    oldElement.child(ind).clone().toString() + "]</font>");
+                            oldElement.child(ind).remove();
+                            for(int k = ind; k < oldElement.children().size() - 1; k++){
+                                oldElement.append(oldElement.child(ind).clone().toString());
+                                oldElement.child(ind).remove();
+                            }
+
+                            newElement.append(oldElement.child(ind).clone().toString());
+                            for(int k = ind; k < newElement.children().size() - 1; k++){
+                                newElement.append(newElement.child(ind).clone().toString());
+                                newElement.child(ind).remove();
+                            }
+                        }
+                    }else {
+                        Element help = oldElement.child(ind).clone();
+                        oldElement.child(ind).remove();
+                        oldElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
+
+                        newElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
+                    }
+                }
+            }
+
+            //Starting Soft Compare replacement
+            while (oldEArray.size() > 0 && newElement.children().size() > 0) {
+                //Creating arrays
                 while (oldElement.children().size() > 0) {
                     oldChildren = new ArrayList<>();
                     newChildren = new ArrayList<>();
@@ -82,11 +119,11 @@ public class Main {
                     }
 
 
-                    if(newElement.children().size() > 0 && oldElement.children().size() > 0) {
-                            oldElement = oldElement.child(0);
-                            newElement = newElement.child(0);
-                    }else {
-                        if(oldElement.children().size() > 0) {
+                    if (newElement.children().size() > 0 && oldElement.children().size() > 0) {
+                        oldElement = oldElement.child(0);
+                        newElement = newElement.child(0);
+                    } else {
+                        if (oldElement.children().size() > 0) {
                             if (!oldElement.child(0).className().equals("FancyDiff")) {
                                 while (oldElement.children().size() > 0) {
                                     oldElement = oldElement.child(0);
@@ -97,7 +134,6 @@ public class Main {
                                 while (oldElement.children().size() > 0) {
                                     oldElement = oldElement.child(0);
                                 }
-                                System.out.println(oldElement);
                             }
                         }
                     }
@@ -116,21 +152,11 @@ public class Main {
                             oldElement = oldElement.child(0);
                         }
                     }
-
-                   /* if (newElement.children().size() > 0) {
-                        newChildren.add(newElement.child(0));
-                        newElement = newElement.child(0);
-                    }
-
-                    if (oldElement.children().size() > 0) {
-                        oldChildren.add(oldElement.child(0));
-                        oldElement = oldElement.child(0);
-                    } */
-
                     oldEArray.add(oldChildren);
                     newEArray.add(newChildren);
                 }
 
+                //Deleting arrays
                 for (int array = oldEArray.size() - 1; array > 0; array--) {
                     if (oldEArray.size() > 1) {
                      //   if (oldEArray.get(array).size() <= 1) {
@@ -165,8 +191,7 @@ public class Main {
                     }
                 }
 
-
-                    //Creating difference Html
+                //Creating difference Html
                 if (oldEArray.size() <= 1) {
                     if (oldEArray.get(0).get(0).children().size() > 0) {
                         difference.append(oldEArray.get(0).get(0).child(0).clone().toString());
@@ -175,12 +200,13 @@ public class Main {
                         for (int ri = 1; ri < newEArray.size(); ri++) {
                             newEArray.remove(ri);
                         }
-                        newEArray.get(0).get(0).child(0).remove();
 
                         if (oldEArray.get(0).get(0).children().size() > 0) {
                             oldElement = oldEArray.get(0).get(0).child(0);
                         }
-
+                        if(newEArray.get(0).get(0).children().size() > 0) {
+                            newEArray.get(0).get(0).child(0).remove();
+                        }
                         if (newEArray.get(0).get(0).children().size() > 0) {
                             newElement = newEArray.get(0).get(0).child(0);
                         }
