@@ -86,18 +86,22 @@ public class Main {
                                 " color='orange'>[" + oldElement.tagName() + "]</font>");
                     }
 
-                    if (!oldElement.ownText().isEmpty()) {
-                       while (newElement.children().size() > 0) {
-                            newElement = newElement.child(0);
-                        }
+                    while (oldElement.children().size() > 0) {
+                        oldElement = oldElement.child(0);
+                    }
 
+                    while (newElement.children().size() > 0){
+                        newElement = newElement.child(0);
+                    }
+
+                    if (!oldElement.ownText().isEmpty()) {
                         if (!oldElement.ownText().equals(newElement.ownText())) {
                             Element help = oldElement.clone();
                             oldElement = oldElement.parent();
                             oldElement.child(0).remove();
                             oldElement.append("<" + help.tagName() + "><font class='FancyDiff' color='red'>[" + help.ownText()
                                     + "]</font></" + help.tagName() + ">");
-                            if (newElement.hasText()) {
+                            if (!newElement.ownText().isEmpty()) {
                                 oldElement.append("<" + newElement.tagName() + "><font class='FancyDiff' color='green'>["
                                         + newElement.ownText() + "]</font></" + newElement.tagName() + ">");
                             }
@@ -117,13 +121,11 @@ public class Main {
 
                     oldEArray.add(oldChildren);
                     newEArray.add(newChildren);
-
-
                 }
 
                 for (int array = oldEArray.size() - 1; array > 0; array--) {
                     if (oldEArray.size() > 1) {
-                        if (oldEArray.get(array).size() <= 1) {
+                     //   if (oldEArray.get(array).size() <= 1) {
                             oldEArray.remove(array);
                             if (oldEArray.size() > 1) {
                                 if (oldEArray.get(array - 1).size() > 1) {
@@ -134,13 +136,13 @@ public class Main {
                                     }
                                 }
                             }
-                        }
+                        //}
                     }
                 }
 
                 for (int array = newEArray.size() - 1; array > 0; array--) {
                     if (newEArray.size() > 1) {
-                        if (newEArray.get(array).size() <= 1) {
+                        //if (newEArray.get(array).size() <= 1) {
                             newEArray.remove(array);
                             if (newEArray.size() > 1) {
                                 if (newEArray.get(array - 1).size() > 1) {
@@ -151,13 +153,7 @@ public class Main {
                                     }
                                 }
                             }
-                        }/* else {
-                            if (newEArray.get(array).size() > 1) {
-                                newEArray.get(array).remove(0);
-                                newElement = newEArray.get(array).get(0);
-                                array = 0;
-                            }
-                        }*/
+                        //}
                     }
                 }
 
