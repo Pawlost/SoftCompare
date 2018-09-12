@@ -4,6 +4,7 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.File;
 import java.io.IOException;
@@ -80,21 +81,28 @@ public class Main {
                         newElement = newElement.child(0);
                     }
 
-                    while (oldElement.children().size() > 0 && newElement.children().size() <= 0) {
-                        oldElement = oldElement.child(0);
-                        oldElement.parent().append("<font class='FancyDiff'" +
-                                " color='orange'>[" + oldElement.tagName() + "]</font>");
+
+                    if(newElement.children().size() > 0 && oldElement.children().size() > 0) {
+                            oldElement = oldElement.child(0);
+                            newElement = newElement.child(0);
+                    }else {
+                        if(oldElement.children().size() > 0) {
+                            if (!oldElement.child(0).className().equals("FancyDiff")) {
+                                while (oldElement.children().size() > 0) {
+                                    oldElement = oldElement.child(0);
+                                    oldElement.parent().append("<font class='FancyDiff'" +
+                                            " color='orange'>[" + oldElement.tagName() + "]</font>");
+                                }
+                            } else {
+                                while (oldElement.children().size() > 0) {
+                                    oldElement = oldElement.child(0);
+                                }
+                                System.out.println(oldElement);
+                            }
+                        }
                     }
 
-                    while (oldElement.children().size() > 0) {
-                        oldElement = oldElement.child(0);
-                    }
-
-                    while (newElement.children().size() > 0){
-                        newElement = newElement.child(0);
-                    }
-
-                    if (!oldElement.ownText().isEmpty()) {
+                    if (!oldElement.ownText().isEmpty() && !oldElement.className().equals("FancyDiff")) {
                         if (!oldElement.ownText().equals(newElement.ownText())) {
                             Element help = oldElement.clone();
                             oldElement = oldElement.parent();
@@ -109,7 +117,7 @@ public class Main {
                         }
                     }
 
-                    if (newElement.children().size() > 0) {
+                   /* if (newElement.children().size() > 0) {
                         newChildren.add(newElement.child(0));
                         newElement = newElement.child(0);
                     }
@@ -117,7 +125,7 @@ public class Main {
                     if (oldElement.children().size() > 0) {
                         oldChildren.add(oldElement.child(0));
                         oldElement = oldElement.child(0);
-                    }
+                    } */
 
                     oldEArray.add(oldChildren);
                     newEArray.add(newChildren);
