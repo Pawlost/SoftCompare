@@ -4,7 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
 
 import java.io.File;
 import java.io.IOException;
@@ -92,53 +91,70 @@ public class Main {
                     }
                 }
             }
+
             //Starting Soft Compare replacement
             while (oldEArray.size() > 0) {
+
+                oldElement = oldEArray.get(oldEArray.size() - 1).get(0);
+                newElement = newEArray.get(newEArray.size() - 1).get(0);
                 //Creating arrays
-                while (oldElement.children().size() > 0) {
+                while (oldElement.children().size() > 0  && !oldElement.tagName().equals("FancyDiff")) {
+
                     oldChildren = new ArrayList<>();
                     newChildren = new ArrayList<>();
 
-                    if (oldElement.children().size() > 1) {
-                        for (int index = 0; index < oldElement.children().size(); index++) {
-                            oldChildren.add(oldElement.child(index));
+                    oldElement = oldEArray.get(oldEArray.size() -1).get(0);
+                    newElement = newEArray.get(newEArray.size() -1).get(0);
+
+                    for(int test=0; test < oldEArray.get(oldEArray.size() - 1).size(); test++){
+                        if(oldEArray.get(oldEArray.size() - 1).get(test).className().equals("FancyDiff")){
+                            oldEArray.get(oldEArray.size() - 1).remove(test);
                         }
-                        oldEArray.add(oldChildren);
-                        oldChildren = new ArrayList<>();
-                        oldElement = oldElement.child(0);
+                        if(oldEArray.get(oldEArray.size() - 1).size() == 0){
+                            oldEArray.remove(oldEArray.size() - 1);
+                        }
+                    }
+
+                    if (oldElement.children().size() > 1) {
+                        if (!oldElement.child(0).className().equals("FancyDiff")) {
+                            for (int index = 0; index < oldElement.children().size(); index++) {
+                                oldChildren.add(oldElement.child(index));
+                            }
+                            oldEArray.add(oldChildren);
+                            oldChildren = new ArrayList<>();
+                            oldElement = oldElement.child(0);
+                        }
                     }
 
                     if (newElement.children().size() > 1) {
-                        for (int index = 0; index < newElement.children().size(); index++) {
-                            newChildren.add(newElement.child(index));
+                        if (!newElement.child(0).className().equals("FancyDiff")) {
+                            for (int index = 0; index < newElement.children().size(); index++) {
+                                newChildren.add(newElement.child(index));
+                            }
+                            newEArray.add(newChildren);
+                            newChildren = new ArrayList<>();
+                            newElement = newElement.child(0);
                         }
-                        newEArray.add(newChildren);
-                        newChildren = new ArrayList<>();
-                        newElement = newElement.child(0);
                     }
-
 
                     if (newElement.children().size() > 0 && oldElement.children().size() > 0) {
                         oldElement = oldElement.child(0);
                         newElement = newElement.child(0);
-                    } else {
-                        if (oldElement.children().size() > 0) {
-                            if (!oldElement.child(0).className().equals("FancyDiff")) {
-                                System.out.println(oldElement);
-                                while (oldElement.children().size() > 0) {
-                                    oldElement = oldElement.child(0);
-                                    oldElement.parent().append("<font class='FancyDiff'" +
-                                            " color='orange'>[" + oldElement.tagName() + "]</font>");
-                                }
-                            } else {
-                                while (oldElement.children().size() > 0) {
-                                    oldElement = oldElement.child(0);
-                                }
+                    } else if (oldElement.children().size() > 0) {
+                        if (!oldElement.className().equals("FancyDiff")) {
+                            while (oldElement.children().size() > 0 && !oldElement.className().equals("FancyDiff")) {
+                                oldElement = oldElement.child(0);
+                                oldElement.parent().parent().append("<font class='FancyDiff'" +
+                                        " color='orange'>[" + oldElement.tagName() + "]</font>");
+                            }
+                        } else {
+                            while (oldElement.children().size() > 0) {
+                                oldElement = oldElement.child(0);
                             }
                         }
                     }
 
-                    if (!oldElement.ownText().isEmpty() && !oldElement.className().equals("FancyDiff")) {
+                    if (!oldElement.ownText().isEmpty() && !oldElement.parent().className().equals("FancyDiff")) {
                         if (!oldElement.ownText().equals(newElement.ownText())) {
                             Element help = oldElement.clone();
                             oldElement = oldElement.parent();
@@ -152,6 +168,9 @@ public class Main {
                             oldElement = oldElement.child(0);
                         }
                     }
+
+                    newChildren.add(newElement);
+                    oldChildren.add(oldElement);
                     oldEArray.add(oldChildren);
                     newEArray.add(newChildren);
                 }
@@ -170,39 +189,16 @@ public class Main {
                 }
 
                 if (oldEArray.get(oldEArray.size() - 1).size() > 1) {
+
                     if (newEArray.get(newEArray.size() - 1).size() > 1) {
-                        if (oldElement.children().size() > newElement.children().size()) {
-                            for (int ind = 0; ind < oldElement.children().size(); ind++) {
-                                if (newElement.children().size() > ind) {
-                                    if (!oldElement.child(ind).tagName().equals(newElement.child(ind).tagName())) {
-
-                                        oldElement.append("<font class='FancyDiff' color='red'>[" +
-                                                oldElement.child(ind).clone().toString() + "]</font>");
-                                        oldElement.child(ind).remove();
-                                        for (int k = ind; k < oldElement.children().size() - 1; k++) {
-                                            oldElement.append(oldElement.child(ind).clone().toString());
-                                            oldElement.child(ind).remove();
-                                        }
-
-                                        newElement.append(oldElement.child(ind).clone().toString());
-                                        for (int k = ind; k < newElement.children().size() - 1; k++) {
-                                            newElement.append(newElement.child(ind).clone().toString());
-                                            newElement.child(ind).remove();
-                                        }
-                                    }
-                                } else {
-                                    Element help = oldElement.child(ind).clone();
-                                    oldElement.child(ind).remove();
-                                    oldElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
-
-                                    newElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
-                                }
-                            }
-                        }
-                        newElement = newEArray.get(newEArray.size() - 1).get(0);
                         newEArray.get(newEArray.size() - 1).remove(0);
+                    }else{
+                        /*for(int rem =0; oldEArray.get(oldEArray.size() - 1).size()) {
+                            oldEArray.get(oldEArray.size() - 1).get(1);
+                            oldEArray.get(oldEArray.size() - 1).remove(1);
+                        }*/
                     }
-                    oldElement = oldEArray.get(oldEArray.size() - 1).get(0);
+
                     oldEArray.get(oldEArray.size() - 1).remove(0);
                 }
 
@@ -216,14 +212,8 @@ public class Main {
                             newEArray.remove(ri);
                         }
 
-                        if (oldEArray.get(0).get(0).children().size() > 0) {
-                            oldElement = oldEArray.get(0).get(0).child(0);
-                        }
                         if (newEArray.get(0).get(0).children().size() > 0) {
                             newEArray.get(0).get(0).child(0).remove();
-                        }
-                        if (newEArray.get(0).get(0).children().size() > 0) {
-                            newElement = newEArray.get(0).get(0).child(0);
                         }
                     } else {
                         oldEArray.remove(0);
