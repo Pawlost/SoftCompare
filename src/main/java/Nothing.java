@@ -2,6 +2,14 @@ package main.java;
 
 public class Nothing {
 
+
+         /*  while (oldElement.children().size() > 0 && !oldElement.className().equals("FancyDiff")) {
+        oldElement = oldElement.child(0);
+        oldElement.parent().parent().append("<font class='FancyDiff'" +
+                " color='orange'>[" + oldElement.tagName() + "]</font>");
+    }
+} else {*/
+
              /*
                         if (oldA.size() > 0 && newA.size() > 0) {
                             System.out.println("here");
@@ -39,6 +47,31 @@ public class Nothing {
                                 System.out.println("ok pico4");
                             }
                         }*/
+
+
+
+
+               /* if (newEArray.get(newEArray.size() - 1).size() < oldEArray.get(oldEArray.size() - 1).size()) {
+                    for (int r = 0; r < oldEArray.get(oldEArray.size() - 1).size(); r++) {
+                        if (oldEArray.get(oldEArray.size() - 1).get(r).children().size() > 0) {
+                            System.out.println(r);
+                            try {
+                                oldChildren = new ArrayList<>();
+                                oldChildren.add(oldEArray.get(oldEArray.size() - 1).get(r));
+                                oldEArray.add(oldChildren);
+
+                                newChildren = new ArrayList<>();
+                                newChildren.add(newEArray.get(newEArray.size() - 1).get(r));
+                                newEArray.add(newChildren);
+                            } catch (IndexOutOfBoundsException ex) {
+                                Element help = oldEArray.get(oldEArray.size() - 1).get(0).clone();
+                                oldEArray.get(oldEArray.size() - 1).get(0).append("<font class='FancyDiff' " +
+                                        "color='red'>" + help.toString() + "</font>");
+                                // newEArray.remove(newEArray.size() -1);
+                            }
+                        }
+                    }
+                }*/
 
 
                 /*
