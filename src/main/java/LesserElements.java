@@ -19,14 +19,20 @@ import java.util.ArrayList;
 
      public void appendChange(String text) {
          mainElement.append("<font class='FancyDiff' color='red'>" + text + "</font>");
+         addChildren();
      }
 
      public void changeMainElement() {
-         changeMainElement(getMainESize() - 1);
+         mainElement = getMainChild(getMainESize() - 1);
      }
 
+     public void changeMainElement(Element change) {
+        mainElement = change.child(0);
+     }
+
+
      public Element getFirstElement(){
-         return get(0).get(0).child(0);
+         return get(0).get(0);
      }
 
 
@@ -34,14 +40,13 @@ import java.util.ArrayList;
          mainElement = getLastChildren().get(childIndex);
      }
 
-     public void changeMainElement(int childIndex) {
-         mainElement = getMainChild(childIndex);
-     }
-
-
      public void addChildren() {
          super.add((ArrayList<Element>) children.clone());
          children = new ArrayList<>();
+     }
+
+     public void addChildren(Element child) {
+         children.add(child);
      }
 
      public void removeAll() {

@@ -16,7 +16,7 @@ class HighterElements extends LesserElements {
         String text = "<" + help.tagName() + ">[" + help.ownText() + "]</" + help.tagName() + ">";
         appendChange(text);
         if (!newElement.ownText().isEmpty()) {
-            newElement.append("<font class='FancyDiff' color='green'><" + newElement.tagName() + ">["
+            mainElement.append("<font class='FancyDiff' color='green'><" + newElement.tagName() + ">["
                     + newElement.ownText() + "]</" + newElement.tagName() + "></font>");
         }
         mainElement = mainElement.child(0);
