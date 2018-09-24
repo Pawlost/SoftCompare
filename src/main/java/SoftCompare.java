@@ -7,19 +7,13 @@ import org.jsoup.nodes.Element;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SoftCompare {
-    private ArrayList<Element> oldChildren;
-    private ArrayList<Element> newChildren;
-    private Document oldDiff;
-    private Document newDiff;
+    HighterElements hightE;
+    LesserElements lessE;
 
-    public SoftCompare(){
-        oldChildren = new ArrayList<>();
-        newChildren = new ArrayList<>();
-    }
+    public SoftCompare(){}
 
     //argorithm itself, frontend of resources
     public void softCompare(HashMap<Integer, Document> oldHTMLChapters, HashMap<Integer, Document> newHTMLChapters,
@@ -27,179 +21,138 @@ public class SoftCompare {
 
         System.out.println("Starting soft compare");
 
-        //Preparing
-        ArrayList<ArrayList<Element>> oldEArray = new ArrayList<>();
-        ArrayList<ArrayList<Element>> newEArray = new ArrayList<>();
-
         Document difference = Jsoup.parse("");
         int chaptersSize = (oldHTMLChapters.size() <= newHTMLChapters.size() ? newHTMLChapters.size() : oldHTMLChapters.size());
 
         //Dividing to chapters
         for (int i = 1; i <= chaptersSize; i++) {
-            oldDiff = oldHTMLChapters.get(i);
-            newDiff = newHTMLChapters.get(i);
 
-            oldChildren.add(oldDiff.body().clone());
-            newChildren.add(newDiff.body().clone());
-
-            oldEArray.add((ArrayList<Element>) oldChildren.clone());
-            newEArray.add((ArrayList<Element>) newChildren.clone());
-
-            Element oldElement = oldEArray.get(0).get(0);
-            Element newElement = newEArray.get(0).get(0);
+            hightE = new HighterElements(oldHTMLChapters.get(i).clone());
+            lessE = new LesserElements(newHTMLChapters.get(i).clone());
 
             //check if there is correct number of main elements
-            if (newElement.children().size() == 0) {
-                oldElement.children().wrap("<font class='FancyDiff' color='red'>");
-                difference.append(oldElement.toString());
-            } else if (oldElement.children().size() > newElement.children().size()) {
-                for (int ind = 0; ind < oldElement.children().size(); ind++) {
-                    if (newElement.children().size() > ind) {
+            if (lessE.getMainESize() == 0) {
+                hightE.mainElement.wrap("<font class='FancyDiff' color='red'>");
+                difference.append(hightE.toString());
+                hightE.removeAll();
+            } else if (hightE.getMainESize() > lessE.getMainESize()) {
 
-                        if (!oldElement.child(ind).tagName().equals(newElement.child(ind).tagName())) {
-                            oldElement.append("<font class='FancyDiff' color='red'>[" +
-                                    oldElement.child(ind).clone().toString() + "]</font>");
-                            oldElement.child(ind).remove();
+                //Add main tag if numbers doesn fit
+                for (int ind = 0; ind < hightE.getMainESize(); ind++) {
+                    if (lessE.getMainESize() > ind) {
+                        if (!hightE.getMainChild(ind).tagName().equals(lessE.getMainChild(ind).tagName())) {
 
-                            for (int k = ind; k < oldElement.children().size() - 1; k++) {
-                                oldElement.append(oldElement.child(ind).clone().toString());
-                                oldElement.child(ind).remove();
-                            }
+                            String text = hightE.mainElement.child(ind).toString();
+                            hightE.appendChange(text);
+                            hightE.mainElement.child(ind).remove();
+                            sort(hightE, ind);
 
-                            newElement.append(oldElement.child(ind).clone().toString());
-                            for (int k = ind; k < newElement.children().size() - 1; k++) {
-                                newElement.append(newElement.child(ind).clone().toString());
-                                newElement.child(ind).remove();
-                            }
+                            lessE.mainElement.append(hightE.getMainChild(ind).toString());
+                            sort(lessE, ind);
                         }
                     } else {
-                        Element help = oldElement.child(ind).clone();
-                        oldElement.child(ind).remove();
-                        oldElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
+                        Element help = hightE.getMainChild(ind).clone();
 
-                        newElement.append("<font class='FancyDiff' color='red'>[" + help.toString() + "]</font>");
+                        hightE.getMainChild(ind).remove();
+                        hightE.appendChange(help.toString());
+
+                        lessE.appendChange(help.toString());
                     }
                 }
             }
 
             //Starting Soft Compare replacement
-            while (oldEArray.size() > 0) {
+            while (hightE.size() > 0) {
 
-                oldElement = oldEArray.get(oldEArray.size() - 1).get(0);
+                hightE.changeMainElement(0);
 
                 //Creating arrays
-                while (oldElement.children().size() > 0 && !oldElement.tagName().equals("FancyDiff")) {
+                while (hightE.getMainESize() > 0) {
 
-                    oldChildren = new ArrayList<>();
-                    newChildren = new ArrayList<>();
+                    if(hightE.getLastChildren().size() > 0) {
+                        hightE.changeMainElement();
+                        lessE.changeMainElement();
+                    }
 
-                    oldElement = oldEArray.get(oldEArray.size() - 1).get(0);
-                    newElement = newEArray.get(newEArray.size() - 1).get(0);
-
-                    for (int test = 0; test < oldEArray.get(oldEArray.size() - 1).size(); test++) {
-                        if (oldEArray.get(oldEArray.size() - 1).get(test).className().equals("FancyDiff")) {
-                            oldEArray.get(oldEArray.size() - 1).remove(test);
+                    //Removes all tags with class FancyDiff
+                    for (int test = 0; test < hightE.getLastChildren().size(); test++) {
+                        if (hightE.getLastChildren().get(test).className().equals("FancyDiff")) {
+                            hightE.getLastChildren().remove(test);
                         }
-                        if (oldEArray.get(oldEArray.size() - 1).size() == 0) {
-                            oldEArray.remove(oldEArray.size() - 1);
+
+                        if (hightE.getLastChildren().size() == 0) {
+                            hightE.remove(hightE.size());
                         }
                     }
 
-                    if (oldElement.children().size() > 1) {
-                        if (!oldElement.child(0).className().equals("FancyDiff")) {
-                            for (int index = 0; index < oldElement.children().size(); index++) {
-                                oldChildren.add(oldElement.child(index));
-                            }
-                            oldEArray.add(oldChildren);
-                            oldChildren = new ArrayList<>();
-                            oldElement = oldElement.child(0);
+                    handleChildren(hightE);
+                    handleChildren(lessE);
+
+                    if (lessE.getMainESize() > 0 && hightE.getMainESize() > 0) {
+                        lessE.changeMainElement();
+                        hightE.changeMainElement();
+
+                    } else if (hightE.getMainESize() > 0) {
+                        while (hightE.getMainESize() > 0) {
+                            hightE.changeMainElement();
                         }
                     }
 
-                    if (newElement.children().size() > 1) {
-                        if (!newElement.child(0).className().equals("FancyDiff")) {
-                            for (int index = 0; index < newElement.children().size(); index++) {
-                                newChildren.add(newElement.child(index));
-                            }
-                            newEArray.add(newChildren);
-                            newChildren = new ArrayList<>();
-                            newElement = newElement.child(0);
+                    if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
+                        if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
+                            hightE.createDifference(lessE.mainElement);
                         }
                     }
 
-                    if (newElement.children().size() > 0 && oldElement.children().size() > 0) {
-                        oldElement = oldElement.child(0);
-                        newElement = newElement.child(0);
-                    } else if (oldElement.children().size() > 0) {
-                        while (oldElement.children().size() > 0) {
-                            oldElement = oldElement.child(0);
-                        }
-                    }
+                    hightE.getLastChildren().add(hightE.mainElement);
+                    lessE.getLastChildren().add(lessE.mainElement);
 
-                    if (!oldElement.ownText().isEmpty() && !oldElement.parent().className().equals("FancyDiff")) {
-                        if (!oldElement.ownText().equals(newElement.ownText())) {
-                            createDifference(oldElement, newElement);
-                        }
-                    }
-
-                    newChildren.add(newElement);
-                    oldChildren.add(oldElement);
-                    oldEArray.add(oldChildren);
-                    newEArray.add(newChildren);
+                    hightE.addChildren();
+                    lessE.addChildren();
                 }
 
                 //Deleting arrays
-                for (int array = oldEArray.size() - 1; array > 0; array--) {
-                    if (oldEArray.size() > 1 && oldEArray.get(array).size() < 2) {
-                        oldEArray.remove(array);
-                    }
-                }
+                deleteArrays(hightE);
+                deleteArrays(lessE);
 
-                for (int array = newEArray.size() - 1; array > 0; array--) {
-                    if (newEArray.size() > 1 && newEArray.get(array).size() < 2) {
-                        newEArray.remove(array);
-                    }
-                }
-
-                while (oldEArray.get(oldEArray.size() - 1).size() > newEArray.get(newEArray.size() - 1).size()) {
-                    for (int ind = 0; ind < oldEArray.get(oldEArray.size() - 1).size(); ind++) {
+                while (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
+                    for (int ind = 0; ind < hightE.getLastChildren().size(); ind++) {
                         try {
-                            Element oldE =  oldEArray.get(oldEArray.size() - 1).get(ind);
-                            Element newE = newEArray.get(newEArray.size() - 1).get(ind);
-                            while (oldE.children().size() > 0 && newE.children().size() > 0) {
-                                createDifference(oldE, newE);
+                            lessE.setMainFromChildren(ind);
+                            hightE.setMainFromChildren(ind);
+
+                            while (hightE.getMainESize() > 0 && lessE.getMainESize() > 0) {
+                                hightE.createDifference(lessE.mainElement);
                             }
                         } catch (Exception ex) {
-                            createDifference(oldEArray.get(oldEArray.size() - 1).get(ind),
-                                    newEArray.get(newEArray.size() - 1).get(0).parent());
+                            hightE.createDifference(lessE.mainElement);
                         }
                     }
                 }
 
-                if (oldEArray.get(oldEArray.size() - 1).size() > 1) {
-                    if (newEArray.get(newEArray.size() - 1).size() > 1) {
-                        newEArray.get(newEArray.size() - 1).remove(0);
+                if (hightE.getLastChildren().size() > 1) {
+                    if (lessE.getLastChildren().size() > 1) {
+                        lessE.getLastChildren().remove(0);
                     }
-                    oldEArray.get(oldEArray.size() - 1).remove(0);
-
+                    hightE.getLastChildren().remove(0);
                 }
 
                 //Creating difference Html
-                if(oldEArray.size() > 1) {
-                    if (oldEArray.get(1).size() < oldEArray.get(0).get(0).children().size()) {
-                        if (oldEArray.get(0).get(0).children().size() > 0) {
-                            difference.append(oldEArray.get(0).get(0).child(0).clone().toString());
-                            oldEArray.get(0).get(0).child(0).remove();
-                            newEArray.get(0).get(0).child(0).remove();
+                if(hightE.size() > 1) {
+                    if (hightE.get(1).size() < hightE.getFirstElement().children().size()) {
+                        if (hightE.getFirstElement().children().size() > 0) {
+                            difference.append(hightE.getFirstElement().child(0).clone().toString());
+                            hightE.getFirstElement().child(0).remove();
+                            hightE.getFirstElement().child(0).remove();
 
-                            for (int ri = 2; ri < newEArray.size(); ri++) {
-                                newEArray.remove(ri);
+                            for (int ri = 2; ri < hightE.size(); ri++) {
+                                hightE.remove(ri);
                             }
                         }
                     }
                 }else{
-                    difference.append(oldEArray.get(0).get(0).child(0).clone().toString());
-                    oldEArray.remove(0);
+                    difference.append(hightE.getFirstElement().clone().toString());
+                    hightE.remove(0);
                 }
             }
         }
@@ -208,20 +161,34 @@ public class SoftCompare {
         System.out.println("Soft compare done");
     }
 
-    private void createDifference(Element oldE, Element newE) {
-        Element help = oldE.clone();
-        oldE = oldE.parent();
-        oldE.child(0).remove();
-        oldE.append("<font class='FancyDiff' color='red'><" + help.tagName() + ">[" + help.ownText()
-                + "]</" + help.tagName() + "></font>");
-        if (!newE.ownText().isEmpty()) {
-            oldE.append("<font class='FancyDiff' color='green'><" + newE.tagName() + ">["
-                    + newE.ownText() + "]</" + newE.tagName() + "></font>");
+    private void sort(LesserElements lessE, int position){
+        for (int k = position; k < lessE.getMainESize() - 1; k++) {
+            lessE.mainElement.append(lessE.mainElement.clone().toString());
+            lessE.getMainChild(position).remove();
         }
-        oldE = oldE.child(0);
     }
 
-    public void createFile(String filePath, String text) throws IOException {
+    //Add children if main in hightE have more under tags
+    private void handleChildren(LesserElements lessE){
+        if (lessE.getMainESize() > 1) {
+            for (int index = 0; index < lessE.getMainESize(); index++) {
+                lessE.getLastChildren().add(lessE.getMainChild(index));
+            }
+            lessE.addChildren();
+            lessE.changeMainElement();
+        }
+    }
+
+    //deleting children as long as there is only 1 element in children
+    private void deleteArrays(LesserElements lessE){
+        for (int array = lessE.size() - 1; array > 0; array--) {
+            if (lessE.size() > 1 && lessE.get(array).size() < 2) {
+                lessE.remove(array);
+            }
+        }
+    }
+
+    private void createFile(String filePath, String text) throws IOException {
         File file = new File(filePath);
         FileUtils.writeStringToFile(file, text + "\n", "UTF-8");
     }
