@@ -19,25 +19,23 @@ import java.util.ArrayList;
 
      public void appendChange(String text) {
          mainElement.append("<font class='FancyDiff' color='red'>" + text + "</font>");
-         addChildren();
      }
-
-     public void changeMainElement() {
-         mainElement = getMainChild(getMainESize() - 1);
-     }
-
-     public void changeMainElement(Element change) {
-        mainElement = change.child(0);
-     }
-
-
-     public Element getFirstElement(){
-         return get(0).get(0);
-     }
-
 
      public void setMainFromChildren(int childIndex) throws IndexOutOfBoundsException{
          mainElement = getLastChildren().get(childIndex);
+     }
+
+
+     public void changeMainElement() {
+         mainElement = getMainChild(0);
+     }
+
+     public void changeMainElement(Element change) {
+        mainElement = change;
+     }
+
+     public Element getFirstElement(){
+         return get(0).get(0);
      }
 
      public void addChildren() {
@@ -49,20 +47,8 @@ import java.util.ArrayList;
          children.add(child);
      }
 
-     public void removeAll() {
-         for (int i = 0; i < super.size(); i++) {
-             super.remove(i);
-         }
-     }
-
      public int getMainESize() {
          return mainElement.children().size();
-     }
-
-     public String getHTML() {
-         String html = super.get(0).get(0).clone().toString();
-         removeAll();
-         return html;
      }
 
      public Element getMainChild(int index) {

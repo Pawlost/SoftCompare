@@ -3,7 +3,30 @@ package main.java;
 public class Nothing {
 
 
-         /*  while (oldElement.children().size() > 0 && !oldElement.className().equals("FancyDiff")) {
+         /*
+                         /*   if (hightE.getMainESize() > 0) {
+                        hightE.changeMainElement();
+                    }
+
+                    if (lessE.getMainESize() > 0) {
+                        lessE.changeMainElement();
+                    }
+
+          */
+                           /*  if (lessE.getMainESize() > 0 && hightE.getMainESize() > 0) {
+                        lessE.changeMainElement();
+                        hightE.changeMainElement();
+
+                    } else if (hightE.getMainESize() > 0) {
+                        while (hightE.getMainESize() > 0) {
+                            hightE.changeMainElement();
+                        }
+                    }
+
+
+
+
+         while (oldElement.children().size() > 0 && !oldElement.className().equals("FancyDiff")) {
         oldElement = oldElement.child(0);
         oldElement.parent().parent().append("<font class='FancyDiff'" +
                 " color='orange'>[" + oldElement.tagName() + "]</font>");
