@@ -45,10 +45,8 @@ public class SoftCompare {
                             String text = hightE.mainElement.child(ind).toString();
                             hightE.appendChange(text);
                             hightE.mainElement.child(ind).remove();
-                            sort(hightE, ind);
 
                             lessE.mainElement.append(hightE.getMainChild(ind).toString());
-                            sort(lessE, ind);
                         }
                     } else {
                         Element help = hightE.getMainChild(ind).clone();
@@ -73,11 +71,11 @@ public class SoftCompare {
             //Starting Soft Compare replacement
             while (hightE.size() > 0) {
 
-                if(hightE.getLastChildren().size() > 0) {
+                if (hightE.getLastChildren().size() > 0) {
                     hightE.changeMainElement(hightE.getLastChildren().get(0));
                 }
 
-                if(lessE.getLastChildren().size() > 0) {
+                if (lessE.getLastChildren().size() > 0) {
                     lessE.changeMainElement(lessE.getLastChildren().get(0));
                 }
 
@@ -119,11 +117,16 @@ public class SoftCompare {
                         try {
                             lessE.setMainFromChildren(ind);
                             hightE.setMainFromChildren(ind);
+                            if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
+                                if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
+                                    hightE.missingDiference(ind);
+                                    hightE = (HighterElements) sort(hightE, ind);
+                                }
+                            }
                         } catch (Exception ex) {
-                            if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
-                                hightE.setMainFromChildren(ind);
-                                hightE.missingDiference(ind);
-                                sort(hightE, ind);
+                           if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
+                                hightE.setMainFromChildren(hightE.getLastChildren().size() - 1);
+                                hightE.missingDiference(hightE.getLastChildren().size() - 1);
                             }
                         }
                     }
@@ -136,7 +139,7 @@ public class SoftCompare {
                     hightE.getLastChildren().remove(0);
                 }
 
-                if(hightE.get(1).size() <= 0 && hightE.size() <= 2){
+                if (hightE.get(1).size() <= 0 && hightE.size() <= 2) {
                     hightE.remove(1);
                 }
 
@@ -166,11 +169,13 @@ public class SoftCompare {
     }
 
     //Put html tags in correct order (From middle position reverse tags)
-    private void sort(LesserElements lessE, int position) {
-        for (int k = position; k < lessE.getMainESize() - 1; k++) {
-            lessE.mainElement.append(lessE.mainElement.clone().toString());
-            lessE.getMainChild(position).remove();
+    private LesserElements sort(LesserElements element, int position) {
+        for (int k = position; k <  element.mainElement.children().size() - 1; k++) {
+            Element help = element.mainElement.child(position).clone();
+            element.mainElement.child(position).remove();
+            element.mainElement.append(help.toString());
         }
+        return (LesserElements) element.clone();
     }
 
     //Add children if main in leserElemets have more under tags

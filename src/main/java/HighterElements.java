@@ -10,6 +10,7 @@ class HighterElements extends LesserElements {
     }
 
     public void createDifference(Element newElement, int childIndex){
+        super.getLastChildren().remove(childIndex);
         Element help = mainElement.clone();
         mainElement = mainElement.parent();
         mainElement.child(childIndex).remove();
@@ -23,9 +24,9 @@ class HighterElements extends LesserElements {
     }
 
     public void missingDiference(int childIndex){
-        super.getLastChildren().remove(childIndex);
-        Element help = mainElement.clone();
+        Element help = super.getLastChildren().get(childIndex).clone();
         mainElement = mainElement.parent();
+        super.getLastChildren().remove(childIndex);
         mainElement.child(childIndex).remove();
         appendChange(help.toString());
     }
