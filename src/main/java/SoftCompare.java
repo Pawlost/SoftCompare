@@ -71,10 +71,15 @@ public class SoftCompare {
             lessE.addChildren();
 
             //Starting Soft Compare replacement
-            while (hightE.size() > 1) {
+            while (hightE.size() > 0) {
 
-                hightE.changeMainElement(hightE.get(1).get(0));
-                lessE.changeMainElement(lessE.get(1).get(0));
+                if(hightE.getLastChildren().size() > 0) {
+                    hightE.changeMainElement(hightE.getLastChildren().get(0));
+                }
+
+                if(lessE.getLastChildren().size() > 0) {
+                    lessE.changeMainElement(lessE.getLastChildren().get(0));
+                }
 
                 //Creating arrays
                 while (hightE.getMainESize() > 0) {
@@ -93,15 +98,12 @@ public class SoftCompare {
                         }
                     }
 
-                    System.out.println("Here");
-
                     hightE.addChildren();
                     lessE.addChildren();
 
                     if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
                         if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
                             hightE.createDifference(lessE.mainElement, 0);
-                            System.out.println("here");
                         }
                     }
                 }
@@ -120,13 +122,11 @@ public class SoftCompare {
                         } catch (Exception ex) {
                             if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
                                 hightE.setMainFromChildren(ind);
-                                System.out.println(hightE.mainElement);
                                 hightE.missingDiference(ind);
                                 sort(hightE, ind);
                             }
                         }
                     }
-                    System.out.println("here");
                 }
 
                 if (hightE.getLastChildren().size() > 1) {
@@ -136,10 +136,13 @@ public class SoftCompare {
                     hightE.getLastChildren().remove(0);
                 }
 
+                if(hightE.get(1).size() <= 0 && hightE.size() <= 2){
+                    hightE.remove(1);
+                }
+
                 //Creating difference Html
                 if (hightE.size() > 1) {
-
-                    if (hightE.getFirstElement().children().size() > 0) {
+                    if (hightE.getFirstElement().children().size() > 0 && hightE.size() < 3) {
                         difference.append(hightE.getFirstElement().child(0).clone().toString());
                         hightE.getFirstElement().child(0).remove();
 
@@ -148,12 +151,11 @@ public class SoftCompare {
                         }
 
                         if (hightE.get(1).size() > hightE.getFirstElement().children().size()) {
-                            hightE.remove(1);
-                            lessE.remove(1);
+                            hightE.get(1).remove(0);
+                            lessE.get(1).remove(0);
                         }
                     }
                 } else {
-                    difference.append(hightE.get(0).get(0).child(0).clone().toString());
                     hightE.remove(0);
                 }
             }
@@ -161,16 +163,6 @@ public class SoftCompare {
 
         createFile(tempPath + "/difference.html", difference.html());
         System.out.println("Soft compare done");
-    }
-
-
-    public void clearElement(LesserElements lessE){
-        for (int re = 2; re < lessE.size(); re++) {
-            for(int rem = lessE.get(re).size() - 1; rem >= 0; rem--) {
-                lessE.get(re).remove(rem);
-            }
-            lessE.remove(re);
-        }
     }
 
     //Put html tags in correct order (From middle position reverse tags)
@@ -196,7 +188,7 @@ public class SoftCompare {
 
     //deleting children as long as there is only 1 element in children
     private void deleteArrays(LesserElements lessE) {
-        for (int array = lessE.size() - 1; array > 0; array--) {
+        for (int array = lessE.size() - 1; array > 1; array--) {
             if (lessE.size() > 2 && lessE.get(array).size() < 2) {
                 lessE.remove(array);
             }
