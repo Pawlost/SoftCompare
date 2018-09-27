@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
+import org.jsoup.select.Elements;
 
 import java.io.File;
 import java.io.IOException;
@@ -46,26 +47,6 @@ public class SoftCompare {
                 hightE.mainElement.wrap("<font class='FancyDiff' color='red'>");
                 difference.append(hightE.toString());
 
-            } else if (hightE.getMainESize() > lessE.getMainESize()) {
-                //Add main tag if numbers doesn fit
-                for (int ind = 0; ind < hightE.getMainESize(); ind++) {
-                    if (lessE.getMainESize() > ind) {
-                        if (!hightE.getMainChild(ind).tagName().equals(lessE.getMainChild(ind).tagName())) {
-
-                            String text = hightE.mainElement.child(ind).toString();
-                            hightE.appendChange(text);
-
-                            lessE.mainElement.append(hightE.getMainChild(ind).toString());
-                        }
-                    } else {
-                        Element help = hightE.getMainChild(ind).clone();
-
-                        hightE.getMainChild(ind).remove();
-                        hightE.appendChange(help.toString());
-
-                        lessE.appendChange(help.toString());
-                    }
-                }
             }
 
             hightE.changeMainElement(hightE.get(0).get(0));
@@ -89,38 +70,50 @@ public class SoftCompare {
                 }
 
                 //Creating arrays
-                while (hightE.getMainESize() > 0) {
+                if (hightE.getMainESize() > 0) {
+                    while (hightE.getMainESize() > 0) {
+                        handleChildren(hightE);
+                        handleChildren(lessE);
 
-                    handleChildren(hightE);
-                    handleChildren(lessE);
+                        //Removes all tags with class FancyDiff
+                        for (int tag = 0; tag < hightE.getLastChildren().size(); tag++) {
+                            if (hightE.getLastChildren().get(tag).className().equals("FancyDiff")) {
+                                hightE.getLastChildren().remove(tag);
+                            }
 
-                    //Removes all tags with class FancyDiff
-                    for (int tag = 0; tag < hightE.getLastChildren().size(); tag++) {
-                        if (hightE.getLastChildren().get(tag).className().equals("FancyDiff")) {
-                            hightE.getLastChildren().remove(tag);
+                            if (hightE.getLastChildren().size() == 0) {
+                                hightE.remove(hightE.size() - 1);
+                            }
                         }
 
-                        if (hightE.getLastChildren().size() == 0) {
-                            hightE.remove(hightE.size() - 1);
+                        for (int tag = 0; tag < lessE.getLastChildren().size(); tag++) {
+                            if (lessE.getLastChildren().get(tag).className().equals("FancyDiff")) {
+                                lessE.getLastChildren().remove(tag);
+                            }
+
+                            if (lessE.getLastChildren().size() == 0) {
+                                lessE.remove(lessE.size() - 1);
+                            }
+                        }
+
+                        hightE.addChildren();
+                        lessE.addChildren();
+
+                        if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
+                            if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
+                                hightE.createDifference(lessE.mainElement, 0);
+                            }
                         }
                     }
-
-                    for (int tag = 0; tag < lessE.getLastChildren().size(); tag++) {
-                        if (lessE.getLastChildren().get(tag).className().equals("FancyDiff")) {
-                            lessE.getLastChildren().remove(tag);
-                        }
-
-                        if (lessE.getLastChildren().size() == 0) {
-                            lessE.remove(lessE.size() - 1);
-                        }
-                    }
-
-                    hightE.addChildren();
-                    lessE.addChildren();
-
+                }else if(hightE.getLastChildren().size() > 1 && hightE.get(1).size() == lessE.get(1).size()) {
                     if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
                         if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
-                            hightE.createDifference(lessE.mainElement, 0);
+                            for (int e = 0; e <  hightE.mainElement.parent().children().size(); e++) {
+                                if (hightE.mainElement.parent().child(e).equals(hightE.mainElement)) {
+                                    hightE.createMultiDifference(lessE.mainElement, e);
+                                    hightE = (HighterElements) sort(hightE, e);
+                                }
+                            }
                         }
                     }
                 }
@@ -142,15 +135,21 @@ public class SoftCompare {
                                     lessE.mainElement = lessE.mainElement.parent();
                                     lessE.appendChange(hightE.mainElement.toString());
                                     hightE.missingDifference(ind);
+
                                     lessE = sort(lessE, ind);
+                                    fixChildren(lessE);
                                     hightE = (HighterElements) sort(hightE, ind);
+                                    fixChildren(hightE);
                                 }
                             } catch (IndexOutOfBoundsException ex) {
                                 lessE.mainElement = lessE.getLastChildren().get(ind - 1).parent();
                                 lessE.appendChange(hightE.mainElement.toString());
                                 hightE.missingDifference(ind);
+
                                 lessE = sort(lessE, ind);
+                                lessE = fixChildren(lessE);
                                 hightE = (HighterElements) sort(hightE, ind);
+                                hightE = (HighterElements) fixChildren(hightE);
                             }
                         }
                     }
@@ -199,12 +198,15 @@ public class SoftCompare {
             element.mainElement.child(position).remove();
             element.mainElement.append(help.toString());
         }
-
-        element.removeAllLast();
-        for(Element child:element.mainElement.children()) {
-            element.getLastChildren().add(child);
-        }
         return (LesserElements) element.clone();
+    }
+
+    private LesserElements fixChildren(LesserElements elements){
+        elements.removeAllLast();
+        for(Element child:elements.mainElement.children()) {
+            elements.getLastChildren().add(child);
+        }
+        return (LesserElements) elements.clone();
     }
 
     //Add children if main in leserElemets have more under tags

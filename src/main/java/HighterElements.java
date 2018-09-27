@@ -10,7 +10,7 @@ class HighterElements extends LesserElements {
     }
 
     public void createDifference(Element newElement, int childIndex){
-        super.getLastChildren().remove(childIndex);
+        getLastChildren().remove(childIndex);
         Element help = mainElement.clone();
         mainElement = mainElement.parent();
         mainElement.child(childIndex).remove();
@@ -21,6 +21,18 @@ class HighterElements extends LesserElements {
                     + newElement.ownText() + "]</" + newElement.tagName() + "></font>");
         }
         mainElement = mainElement.child(0);
+    }
+
+    public void createMultiDifference(Element newElement, int childIndex){
+        Element help = mainElement.clone();
+        mainElement = mainElement.parent();
+        mainElement.child(childIndex).remove();
+        String text = "<" + help.tagName() + ">[" + help.ownText() + "]</" + help.tagName() + ">";
+        appendChange(text);
+        if (!newElement.ownText().isEmpty()) {
+            mainElement.child(mainElement.children().size() - 1).append("<font class='FancyDiff' color='green'><" + newElement.tagName() + ">["
+                    + newElement.ownText() + "]</" + newElement.tagName() + "></font>");
+        }
     }
 
     public void missingDifference(int childIndex){
