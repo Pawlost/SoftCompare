@@ -105,6 +105,16 @@ public class SoftCompare {
                         }
                     }
 
+                    for (int tag = 0; tag < lessE.getLastChildren().size(); tag++) {
+                        if (lessE.getLastChildren().get(tag).className().equals("FancyDiff")) {
+                            lessE.getLastChildren().remove(tag);
+                        }
+
+                        if (lessE.getLastChildren().size() == 0) {
+                            lessE.remove(lessE.size() - 1);
+                        }
+                    }
+
                     hightE.addChildren();
                     lessE.addChildren();
 
@@ -123,26 +133,24 @@ public class SoftCompare {
                 if (hightE.getLastChildren().size() > lessE.getLastChildren().size() &&
                         !hightE.get(1).equals(hightE.getLastChildren())) {
                     for (int ind = 0; ind < hightE.getLastChildren().size(); ind++) {
-                        if (lessE.getLastChildren().size() - (ind + 1) < 0) {
-                            if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
-                                try {
-                                    hightE.mainElement = hightE.getLastChildren().get(ind);
-                                    lessE.mainElement = lessE.getLastChildren().get(ind);
-                                    if(!hightE.mainElement.tagName().equals(lessE.mainElement.tagName())
-                                            || !hightE.mainElement.ownText().equals(lessE.mainElement.ownText())){
-                                        lessE.mainElement = lessE.mainElement.parent();
-                                        lessE.appendChange(hightE.toString());
-                                        hightE.missingDifference(ind);
-                                        lessE = sort(lessE, ind - 1);
-                                        hightE = (HighterElements) sort(hightE, ind);
-                                    }
-                                }catch (IndexOutOfBoundsException ex) {
-                                    lessE.mainElement = lessE.getLastChildren().get(ind -1).parent();
-                                    lessE.appendChange(hightE.toString());
+                        if (hightE.size() == lessE.size()) {
+                            try {
+                                hightE.mainElement = hightE.getLastChildren().get(ind);
+                                lessE.mainElement = lessE.getLastChildren().get(ind);
+                                if (!hightE.mainElement.tagName().equals(lessE.mainElement.tagName())
+                                        || !hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
+                                    lessE.mainElement = lessE.mainElement.parent();
+                                    lessE.appendChange(hightE.mainElement.toString());
                                     hightE.missingDifference(ind);
                                     lessE = sort(lessE, ind);
                                     hightE = (HighterElements) sort(hightE, ind);
                                 }
+                            } catch (IndexOutOfBoundsException ex) {
+                                lessE.mainElement = lessE.getLastChildren().get(ind - 1).parent();
+                                lessE.appendChange(hightE.mainElement.toString());
+                                hightE.missingDifference(ind);
+                                lessE = sort(lessE, ind);
+                                hightE = (HighterElements) sort(hightE, ind);
                             }
                         }
                     }

@@ -19,8 +19,8 @@ public class Main {
         }
 
         try {
-           SoftCompare softCompare = new SoftCompare();
-           softCompare.softCompare(oldH, newH, "./resources");
+           SoftCompare softCompare = new SoftCompare(oldH, newH, "./resources");
+           softCompare.softCompare();
         } catch (IOException e) {
             e.printStackTrace();
         }
