@@ -21,10 +21,15 @@ import java.util.ArrayList;
          mainElement.append("<font class='FancyDiff' color='red'>" + text + "</font>");
      }
 
-     public void setMainFromChildren(int childIndex) throws IndexOutOfBoundsException{
+     public void setMainLast(int childIndex) throws IndexOutOfBoundsException{
          mainElement = getLastChildren().get(childIndex);
      }
 
+     public void removeAllLast(){
+         while(!getLastChildren().isEmpty()){
+            getLastChildren().remove(0);
+         }
+     }
 
      public void changeMainElement() {
          mainElement = getMainChild(0);

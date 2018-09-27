@@ -4,10 +4,13 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
+import org.jsoup.nodes.TextNode;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 
 public class SoftCompare {
     HighterElements hightE;
@@ -44,7 +47,6 @@ public class SoftCompare {
 
                             String text = hightE.mainElement.child(ind).toString();
                             hightE.appendChange(text);
-                            hightE.mainElement.child(ind).remove();
 
                             lessE.mainElement.append(hightE.getMainChild(ind).toString());
                         }
@@ -114,19 +116,26 @@ public class SoftCompare {
                 if (hightE.getLastChildren().size() > lessE.getLastChildren().size() &&
                         !hightE.get(1).equals(hightE.getLastChildren())) {
                     for (int ind = 0; ind < hightE.getLastChildren().size(); ind++) {
-                        try {
-                            lessE.setMainFromChildren(ind);
-                            hightE.setMainFromChildren(ind);
-                            if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.parent().className().equals("FancyDiff")) {
-                                if (!hightE.mainElement.ownText().equals(lessE.mainElement.ownText())) {
-                                    hightE.missingDiference(ind);
+                        if (lessE.getLastChildren().size() - (ind + 1) < 0) {
+                            if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
+                                try {
+                                    hightE.mainElement = hightE.getLastChildren().get(ind);
+                                    lessE.mainElement = lessE.getLastChildren().get(ind);
+                                    if(!hightE.mainElement.tagName().equals(lessE.mainElement.tagName())
+                                            || !hightE.mainElement.ownText().equals(lessE.mainElement.ownText())){
+                                        lessE.mainElement = lessE.mainElement.parent();
+                                        lessE.appendChange(hightE.toString());
+                                        hightE.missingDifference(ind);
+                                        lessE = sort(lessE, ind - 1);
+                                        hightE = (HighterElements) sort(hightE, ind);
+                                    }
+                                }catch (IndexOutOfBoundsException ex) {
+                                    lessE.mainElement = lessE.getLastChildren().get(ind -1).parent();
+                                    lessE.appendChange(hightE.toString());
+                                    hightE.missingDifference(ind);
+                                    lessE = sort(lessE, ind);
                                     hightE = (HighterElements) sort(hightE, ind);
                                 }
-                            }
-                        } catch (Exception ex) {
-                           if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
-                                hightE.setMainFromChildren(hightE.getLastChildren().size() - 1);
-                                hightE.missingDiference(hightE.getLastChildren().size() - 1);
                             }
                         }
                     }
@@ -174,6 +183,11 @@ public class SoftCompare {
             Element help = element.mainElement.child(position).clone();
             element.mainElement.child(position).remove();
             element.mainElement.append(help.toString());
+        }
+
+        element.removeAllLast();
+        for(Element child:element.mainElement.children()) {
+            element.getLastChildren().add(child);
         }
         return (LesserElements) element.clone();
     }

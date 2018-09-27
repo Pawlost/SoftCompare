@@ -23,7 +23,7 @@ class HighterElements extends LesserElements {
         mainElement = mainElement.child(0);
     }
 
-    public void missingDiference(int childIndex){
+    public void missingDifference(int childIndex){
         Element help = super.getLastChildren().get(childIndex).clone();
         mainElement = mainElement.parent();
         super.getLastChildren().remove(childIndex);
