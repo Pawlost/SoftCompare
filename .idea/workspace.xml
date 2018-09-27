@@ -2,15 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="88ed814d-ed50-4ecd-865b-ec32b36d8775" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/HighterElements.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/HighterElements.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/SoftCompare.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/SoftCompare.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/resources/chapter2.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/resources/chapter2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/resources/difference.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/difference.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/HighterElements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HighterElements.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LesserElements.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LesserElements.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SoftCompare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SoftCompare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/chapter2.html" beforeDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -29,7 +21,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/SoftCompare.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="135">
-              <caret line="125" column="87" selection-start-line="125" selection-start-column="87" selection-end-line="125" selection-end-column="87" />
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -714,7 +706,7 @@
     <entry file="file://$PROJECT_DIR$/src/main/java/SoftCompare.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="135">
-          <caret line="125" column="87" selection-start-line="125" selection-start-column="87" selection-end-line="125" selection-end-column="87" />
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>

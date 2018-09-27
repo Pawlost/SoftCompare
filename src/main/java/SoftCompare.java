@@ -13,20 +13,27 @@ import java.util.HashMap;
 import java.util.List;
 
 public class SoftCompare {
-    HighterElements hightE;
-    LesserElements lessE;
+    private HighterElements hightE;
+    private LesserElements lessE;
+    private int chaptersSize;
+    private HashMap<Integer, Document> oldHTMLChapters;
+    private HashMap<Integer, Document> newHTMLChapters;
+    private String tempPath;
+    private Document difference;
 
-    public SoftCompare() {
+    public SoftCompare(HashMap<Integer, Document> oldHTMLChapters, HashMap<Integer, Document> newHTMLChapters,
+                       String tempPath) {
+        difference = Jsoup.parse("");
+        this.tempPath = tempPath;
+        this.oldHTMLChapters = oldHTMLChapters;
+        this.newHTMLChapters = newHTMLChapters;
+        chaptersSize = (oldHTMLChapters.size() <= newHTMLChapters.size() ? newHTMLChapters.size() : oldHTMLChapters.size());
     }
 
     //argorithm itself, frontend of resources
-    public void softCompare(HashMap<Integer, Document> oldHTMLChapters, HashMap<Integer, Document> newHTMLChapters,
-                            String tempPath) throws IOException {
+    public void softCompare() throws IOException {
 
         System.out.println("Starting soft compare");
-
-        Document difference = Jsoup.parse("");
-        int chaptersSize = (oldHTMLChapters.size() <= newHTMLChapters.size() ? newHTMLChapters.size() : oldHTMLChapters.size());
 
         //Dividing to chapters
         for (int i = 1; i <= chaptersSize; i++) {
