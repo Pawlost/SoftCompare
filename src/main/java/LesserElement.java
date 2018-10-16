@@ -5,24 +5,24 @@ import org.jsoup.nodes.Element;
 
 import java.util.ArrayList;
 
- public class LesserElements extends ArrayList<ArrayList<Element>> {
+ public class LesserElement extends ArrayList<ArrayList<Element>> {
 
      private ArrayList<Element> children;
      protected Element mainElement;
 
-     LesserElements(Document diff) {
+     public LesserElement(Document diff) {
          children = new ArrayList<>();
          children.add(diff.body());
          addChildren();
          mainElement = getFirstElement();
      }
 
-     public void appendChange(String text) {
-         mainElement.append("<font class='FancyDiff' color='red'>" + text + "</font>");
+     public LesserElement() {
+         children = new ArrayList<>();
      }
 
-     public void setMainLast(int childIndex) throws IndexOutOfBoundsException{
-         mainElement = getLastChildren().get(childIndex);
+     public void appendChange(String text) {
+         mainElement.append("<font class='FancyDiff' color='red'>" + text + "</font>");
      }
 
      public void removeAllLast(){
@@ -62,5 +62,14 @@ import java.util.ArrayList;
 
      public ArrayList<Element> getLastChildren() {
          return get(size() - 1);
+     }
+
+     public LesserElement cloneE() {
+         LesserElement less = new LesserElement();
+         for(ArrayList<Element> child:this){
+             less.add((ArrayList<Element>) child.clone());
+         }
+         less.mainElement = this.mainElement;
+         return less;
      }
  }

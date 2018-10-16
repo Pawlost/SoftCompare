@@ -3,6 +3,21 @@ package main.java;
 public class Nothing {
 
 
+/*else if(hightE.getLastChildren().size() > 0 && hightE.get(1).size() == lessE.get(1).size()) {
+                    if (!hightE.mainElement.ownText().isEmpty() && !hightE.mainElement.className().equals("FancyDiff") &&
+                            !hightE.mainElement.ownText().equals(lessE.mainElement.ownText()) &&
+                                    hightE.mainElement.parents().size() > 0) {
+                        for (int e = 0; e < hightE.mainElement.parent().children().size(); e++) {
+                            if (hightE.mainElement.parent().child(e).equals(hightE.mainElement)) {
+                                hightE.createMultiDifference(lessE.mainElement, e);
+                                hightE = (HighterElement) sort(hightE, e);
+                            }
+                        }
+                        hightE.mainElement = hightE.getLastChildren().get(0);
+                    }
+                }*/
+
+
          /*
                          /*   if (hightE.getMainESize() > 0) {
                         hightE.changeMainElement();
