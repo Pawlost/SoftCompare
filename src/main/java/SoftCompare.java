@@ -4,9 +4,6 @@ import org.apache.commons.io.FileUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
-
-import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -68,7 +65,7 @@ public class SoftCompare {
                 }
 
                 //Checking undertags
-                while (hightE.getMainESize() > 0) {
+                while (hightE.getMainESize() > 0  && hightE.getLastChildren().size() > 0) {
                     handleChildren(hightE);
                     handleChildren(lessE);
 
@@ -104,78 +101,90 @@ public class SoftCompare {
                     }
                 }
 
-                //Deleting arrays
-                    deleteArrays(hightE);
-                    deleteArrays(lessE);
-
-                        //See if there is change in all tags
-                        System.out.println("here");
-                        if (hightE.getLastChildren().size() > lessE.getLastChildren().size() &&
-                                !hightE.get(1).equals(hightE.getLastChildren())) {
-
+                if (hightE.size() > lessE.size()) {
+                    if (findAllChildren(hightE.getLastChildren(), lessE.getLastChildren()) <= 0) {
+                        int size = hightE.getLastChildren().size();
+                        for (int ir = 0; ir < size; ir++) {
                             hightE.mainElement = hightE.getLastChildren().get(0);
-                            if (lessE.getLastChildren().size() > 0) {
-                                lessE.mainElement = lessE.getLastChildren().get(0);
-                            }
                             Element mainElementParent = hightE.mainElement.parent();
                             ArrayList<Element> clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
-                            int is = findChildren(clone, lessE.mainElement);
+                            int is = findChildren(clone, hightE.mainElement);
+                            hightE.createMultiDifference(is);
+                            sortMainE(hightE, is);
+                            updateChildren(hightE, hightE.mainElement);
+                            hightE.getLastChildren().remove(0);
+                        }
+                        hightE.remove(hightE.size() - 1);
+                    }
+                }
 
-                            if (is < 0) {
-                                if (hightE.size() == lessE.size()) {
-                                    if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
-                                        if (findAllChildren(hightE.getLastChildren(), lessE.getLastChildren()) >= lessE.getLastChildren().size()) {
-                                            is = findChildren(clone, hightE.mainElement);
-                                            hightE.createMultiDifference(is);
-                                            sortMainE(hightE, is);
-                                            updateChildren(hightE, hightE.mainElement);
-                                            hightE.getLastChildren().remove(0);
-                                        } else {
-                                            is = findChildren(clone, hightE.mainElement);
-                                            hightE.createMultiDifference(lessE.mainElement, is);
-                                            hightE.getLastChildren().remove(1);
-                                            hightE.mainElement.child(is).remove();
-                                            sortMainE(hightE, is - 1);
-                                            updateChildren(hightE, hightE.mainElement);
-                                            hightE.getLastChildren().remove(0);
-                                            lessE.getLastChildren().remove(0);
-                                        }
-                                    }
-                                }
-                            } else {
-                                hightE.getLastChildren().remove(0);
-                                if (lessE.getLastChildren().size() > 0) {
+                //See if there is change in all tags
+                if (hightE.getLastChildren().size() > lessE.getLastChildren().size() &&
+                        !hightE.get(1).equals(hightE.getLastChildren())) {
+
+                    hightE.mainElement = hightE.getLastChildren().get(0);
+                    if (lessE.getLastChildren().size() > 0) {
+                        lessE.mainElement = lessE.getLastChildren().get(0);
+                    }
+                    Element mainElementParent = hightE.mainElement.parent();
+                    ArrayList<Element> clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                    int is = findChildren(clone, lessE.mainElement);
+
+                    if (is < 0) {
+                        if (hightE.size() == lessE.size()) {
+                            if (hightE.getLastChildren().size() > lessE.getLastChildren().size()) {
+                                if (findAllChildren(hightE.getLastChildren(), lessE.getLastChildren()) >= lessE.getLastChildren().size()) {
+                                    is = findChildren(clone, hightE.mainElement);
+                                    hightE.createMultiDifference(is);
+                                    hightE = (HighterElement) sortMainE(hightE, is);
+                                    updateChildren(hightE, hightE.mainElement);
+                                    hightE.getLastChildren().remove(0);
+                                } else {
+                                    is = findChildren(clone, hightE.mainElement);
+                                    hightE.createMultiDifference(lessE.mainElement, is);
+                                    hightE = (HighterElement) sortMainE(hightE, is);
+                                    updateChildren(hightE, hightE.mainElement);
+                                    hightE.getLastChildren().remove(0);
                                     lessE.getLastChildren().remove(0);
                                 }
                             }
-                        } else if (hightE.size() > lessE.size()) {
-                            int size = hightE.getLastChildren().size();
-                            for (int ir = 0; ir < size; ir++) {
-                                hightE.mainElement = hightE.getLastChildren().get(0);
-                                Element mainElementParent = hightE.mainElement.parent();
-                                ArrayList<Element> clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
-                                int is = findChildren(clone, hightE.mainElement);
-                                hightE.createMultiDifference(is);
-                                sortMainE(hightE, is);
-                                updateChildren(hightE, hightE.mainElement);
-                                hightE.getLastChildren().remove(0);
-                            }
-                            hightE.remove(hightE.size() - 1);
-                        } else if (!hightE.mainElement.ownText().isEmpty() && hightE.mainElement.parents().size() > 0 &&
-                                !hightE.mainElement.ownText().equals(lessE.mainElement.ownText()) &&
-                                hightE.getLastChildren().size() == lessE.getLastChildren().size()) {
-                            hightE.createMultiDifference(lessE.mainElement, 0);
-                        } else if (hightE.size() > 2) {
-                            if (hightE.getLastChildren().size() > 0) {
-                                hightE.getLastChildren().remove(0);
-                            }
-
-                            if (lessE.getLastChildren().size() > 0) {
-                                lessE.getLastChildren().remove(0);
-                            }
                         }
+                    }else if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0){
+                         clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                         is = findChildren(clone, hightE.mainElement);
+                        hightE.createMultiDifference(is);
+                        hightE.getLastChildren().remove(0);
+                    } else if(!hightE.getLastChildren().get(0).ownText().equals(lessE.getLastChildren().get(0).ownText())){
+                            clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                            is = findChildren(clone, hightE.mainElement);
+                            hightE.createMultiDifference(is);
+                            hightE = (HighterElement) sortMainE(hightE, is);
+                            updateChildren(hightE, hightE.mainElement);
+                            hightE.getLastChildren().remove(0);
+                    } else {
+                        //Deleting arrays in last children
+                        hightE.getLastChildren().remove(0);
+                        if (lessE.getLastChildren().size() > 0) {
+                            lessE.getLastChildren().remove(0);
+                        }
+                    }
+                } else if (hightE.size() > 2) {
+                    //Deleting all 1 main arrays
+                    while (hightE.getLastChildren().size() < 2 && !hightE.getLastChildren().equals(hightE.get(1))) {
+                        hightE.remove(hightE.size() - 1);
+                        if (lessE.getLastChildren().size() < 2) {
+                            lessE.remove(lessE.size() - 1);
+                        }
+                    }
+                    if (!hightE.getLastChildren().equals(hightE.get(1))) {
+                        hightE.getLastChildren().remove(0);
+                        if (lessE.getLastChildren().size() > 0) {
+                            lessE.getLastChildren().remove(0);
+                        }
+                    }
+                }
 
-                if (hightE.get(1).size() == 0 && hightE.size() == 2) {
+                if (hightE.get(1).size() == 0 && hightE.size() < 3) {
                     hightE.remove(1);
                 }
 
@@ -207,12 +216,13 @@ public class SoftCompare {
     }
 
     //Put html tags in correct order (From middle position reverse tags)
-    private void sortMainE(LesserElement element, int position) {
-        for (int k = 0; k < element.mainElement.children().size() - 1; k++) {
+    private LesserElement sortMainE(LesserElement element, int position) {
+        for (int k = position + 1; k < element.mainElement.children().size(); k++) {
             Element help = element.mainElement.child(position).clone();
             element.mainElement.child(position).remove();
             element.mainElement.append(help.toString());
         }
+        return element;
     }
 
     private LesserElement fixChildren(LesserElement element, Element replacement) {
@@ -249,10 +259,10 @@ public class SoftCompare {
     }
 
     //deleting children as long as there is only 1 element in children
-    private void deleteArrays(LesserElement firstE) {
-        for (int array = firstE.size() - 1; array > 1; array--) {
-            if (firstE.size() > 2 && firstE.get(array).size() < 2) {
-                firstE.remove(array);
+    private void deleteArrays(LesserElement arrayElement) {
+        for (int arraySize = arrayElement.size() - 1; arraySize > 1; arraySize--) {
+            if (arrayElement.size() > 2 && arrayElement.get(arraySize).size() < 2) {
+                arrayElement.remove(arraySize);
             }
         }
     }

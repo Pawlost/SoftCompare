@@ -16,7 +16,15 @@ public class Nothing {
                         hightE.mainElement = hightE.getLastChildren().get(0);
                     }
                 }*/
-
+/*else if (!hightE.mainElement.ownText().isEmpty() && hightE.mainElement.parents().size() > 0 &&
+                        !hightE.mainElement.ownText().equals(lessE.mainElement.ownText()) &&
+                        hightE.getLastChildren().size() == lessE.getLastChildren().size()) {
+                    hightE.createMultiDifference(lessE.mainElement, 0);
+                    sortMainE(hightE, 0);
+                    updateChildren(hightE, hightE.mainElement);
+                    hightE.getLastChildren().remove(0);
+                    lessE.getLastChildren().remove(0);
+                }*/
 
          /*
                          /*   if (hightE.getMainESize() > 0) {
