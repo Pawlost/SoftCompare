@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class SoftCompare {
-    private HighterElement hightE;
-    private LesserElement lessE;
     private int chaptersSize;
     private HashMap<Integer, Document> oldHTMLChapters;
     private HashMap<Integer, Document> newHTMLChapters;
@@ -35,8 +33,8 @@ public class SoftCompare {
         //Dividing to chapters
         for (int i = 1; i <= chaptersSize; i++) {
 
-            hightE = new HighterElement(oldHTMLChapters.get(i).clone());
-            lessE = new LesserElement(newHTMLChapters.get(i).clone());
+            HighterElement hightE = new HighterElement(oldHTMLChapters.get(i).clone());
+            LesserElement lessE = new LesserElement(newHTMLChapters.get(i).clone());
 
             //check if there is correct number of main elements
             if (lessE.getMainESize() == 0) {
@@ -48,6 +46,7 @@ public class SoftCompare {
             hightE.changeMainElement(hightE.get(0).get(0));
             lessE.changeMainElement(lessE.get(0).get(0));
 
+            //if(!hightE.mainElement.toString().equals(hightE.get(hightE.size() - 2).get(0).toString())) {
             handleChildren(hightE);
             handleChildren(lessE);
 
@@ -65,7 +64,7 @@ public class SoftCompare {
                 }
 
                 //Checking undertags
-                while (hightE.getMainESize() > 0  && hightE.getLastChildren().size() > 0) {
+                while (hightE.getMainESize() > 0 && hightE.getLastChildren().size() > 0){
                     handleChildren(hightE);
                     handleChildren(lessE);
 
@@ -90,13 +89,53 @@ public class SoftCompare {
                         }
                     }
 
+                    System.out.println(hightE.children);
+                    if(hightE.getLastChildren().size() <= 1) {
+                        for (int f = 0; f < hightE.children.size(); f++) {
+                            if (hightE.getLastChildren().get(0) == hightE.children.get(f)) {
+                                hightE.children.remove(f);
+                                hightE.mainElement = hightE.getLastChildren().get(0);
+                            }
+                        }
+                    }
+
                     hightE.addChildren();
                     lessE.addChildren();
+
+                    while (hightE.getLastChildren().size() == 0){
+                        hightE.remove(hightE.size() -1);
+                    }
+
+                    while (lessE.getLastChildren().size() == 0){
+                        lessE.remove(hightE.size() -1);
+                    }
+
+                    if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0){
+                        hightE.createMultiDifference(0);
+                        lessE.appendChange(hightE.getLastChildren().get(0).toString());
+                    }else if (hightE.getLastChildren().get(0).children().size() > 0 &&
+                             lessE.getLastChildren().get(0).children().size() > 0) {
+                         while (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() > 0 &&
+                                 hightE.getLastChildren().get(0).children().size() > 0 && lessE.getLastChildren().get(0).children().size() > 0) {
+                             handleChildren(hightE);
+                             handleChildren(lessE);
+
+                             hightE.addChildren();
+                             lessE.addChildren();
+                         }
+                         if (hightE.getLastChildren().size() > 0 && hightE.getLastChildren().get(0).children().size() > 0) {
+                             hightE.createMultiDifference(0);
+                             lessE.appendChange(hightE.getLastChildren().get(0).toString());
+                         }
+                     }
 
                     if (!hightE.mainElement.ownText().isEmpty() && hightE.mainElement.parents().size() > 0 &&
                             !hightE.mainElement.ownText().equals(lessE.mainElement.ownText()) &&
                             hightE.getLastChildren().size() == lessE.getLastChildren().size()) {
                         hightE.createMultiDifference(lessE.mainElement, 0);
+                    }
+
+                    if(hightE.getLastChildren().size() != lessE.getLastChildren().size()){
                         break;
                     }
                 }
@@ -120,7 +159,8 @@ public class SoftCompare {
 
                 //See if there is change in all tags
                 if (hightE.getLastChildren().size() > lessE.getLastChildren().size() &&
-                        !hightE.get(1).equals(hightE.getLastChildren())) {
+                        !hightE.get(1).equals(hightE.getLastChildren()) &&
+                        hightE.getLastChildren().get(0).children().size() < 1) {
 
                     hightE.mainElement = hightE.getLastChildren().get(0);
                     if (lessE.getLastChildren().size() > 0) {
@@ -154,21 +194,21 @@ public class SoftCompare {
                          is = findChildren(clone, hightE.mainElement);
                         hightE.createMultiDifference(is);
                         hightE.getLastChildren().remove(0);
-                    } else if(!hightE.getLastChildren().get(0).ownText().equals(lessE.getLastChildren().get(0).ownText())){
+                    } else if(!hightE.getLastChildren().get(0).text().equals(lessE.getLastChildren().get(0).text())){
                             clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
                             is = findChildren(clone, hightE.mainElement);
                             hightE.createMultiDifference(is);
                             hightE = (HighterElement) sortMainE(hightE, is);
                             updateChildren(hightE, hightE.mainElement);
                             hightE.getLastChildren().remove(0);
-                    } else {
+                    }else {
                         //Deleting arrays in last children
                         hightE.getLastChildren().remove(0);
                         if (lessE.getLastChildren().size() > 0) {
                             lessE.getLastChildren().remove(0);
                         }
                     }
-                } else if (hightE.size() > 2) {
+                }else if (hightE.size() > 2) {
                     //Deleting all 1 main arrays
                     while (hightE.getLastChildren().size() < 2 && !hightE.getLastChildren().equals(hightE.get(1))) {
                         hightE.remove(hightE.size() - 1);
@@ -247,15 +287,16 @@ public class SoftCompare {
 
     //Add children if main in leserElemets have more under tags
     private void handleChildren(LesserElement lessE) {
-        if (lessE.getMainESize() > 1) {
-            for (int index = 0; index < lessE.getMainESize(); index++) {
-                lessE.addChildren(lessE.getMainChild(index));
+
+            if (lessE.getMainESize() > 1) {
+                for (int index = 0; index < lessE.getMainESize(); index++) {
+                    lessE.addChildren(lessE.getMainChild(index));
+                }
+                lessE.changeMainElement();
+            } else if (lessE.getMainESize() == 1) {
+                lessE.addChildren(lessE.mainElement);
+                lessE.changeMainElement();
             }
-            lessE.changeMainElement();
-        } else if (lessE.getMainESize() == 1) {
-            lessE.addChildren(lessE.mainElement);
-            lessE.changeMainElement();
-        }
     }
 
     //deleting children as long as there is only 1 element in children
@@ -287,9 +328,9 @@ public class SoftCompare {
 
     private int findAllChildren(ArrayList<Element> hightElement, ArrayList<Element> lesserElement) {
         int count = 0;
-        for (int hindex = 0; hindex < hightElement.size(); hindex++) {
-            for (int lindex = 0; lindex < lesserElement.size(); lindex++) {
-                if (hightElement.get(hindex).text().equals(lesserElement.get(lindex).text())) {
+        for (Element aHightElement : hightElement) {
+            for (Element aLesserElement : lesserElement) {
+                if (aHightElement.text().equals(aLesserElement.text())) {
                     count++;
                 }
             }

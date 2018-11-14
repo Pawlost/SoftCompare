@@ -7,7 +7,7 @@ import java.util.ArrayList;
 
  public class LesserElement extends ArrayList<ArrayList<Element>> {
 
-     private ArrayList<Element> children;
+     public ArrayList<Element> children;
      protected Element mainElement;
 
      public LesserElement(Document diff) {
