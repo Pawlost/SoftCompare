@@ -17,7 +17,7 @@ class HighterElement extends LesserElement {
         appendChange(text);
         if (!newElement.ownText().isEmpty()) {
             mainElement.child(mainElement.children().size() - 1).append("<font class='FancyDiff' color='green'><" + newElement.tagName() + ">"
-                    + newElement.ownText() + "</" + newElement.tagName() + "></font>");
+                    + newElement.text() + "</" + newElement.tagName() + "></font>");
         }
     }
 

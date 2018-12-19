@@ -53,8 +53,20 @@ public class SoftCompare {
             hightE.addChildren();
             lessE.addChildren();
 
+            int remove = hightE.getLastChildren().size() - lessE.getLastChildren().size();
+
+            if (remove > 0) {
+                for (int r = 0; r < remove; r++) {
+                    hightE.createMultiDifference(r);
+                    sortMainE(hightE, r);
+                    hightE.getLastChildren().remove(r);
+                    hightE.mainElement = hightE.mainElement.child(0);
+                }
+            }
+
             //Starting Soft Compare replacement
             while (hightE.size() > 0) {
+                System.out.println("here4");
                 if (hightE.getLastChildren().size() > 0) {
                     hightE.changeMainElement(hightE.getLastChildren().get(0));
                 }
@@ -64,9 +76,10 @@ public class SoftCompare {
                 }
 
                 //Checking undertags
-                while (hightE.getMainESize() > 0 && hightE.getLastChildren().size() > 0){
+                while (hightE.getMainESize() > 0 && hightE.getLastChildren().size() > 0) {
                     handleChildren(hightE);
                     handleChildren(lessE);
+                    System.out.println("here1");
 
                     //Removes all tags with class FancyDiff
                     for (int tag = 0; tag < hightE.getLastChildren().size(); tag++) {
@@ -89,8 +102,7 @@ public class SoftCompare {
                         }
                     }
 
-                    System.out.println(hightE.children);
-                    if(hightE.getLastChildren().size() <= 1) {
+                    if (hightE.getLastChildren().size() <= 1) {
                         for (int f = 0; f < hightE.children.size(); f++) {
                             if (hightE.getLastChildren().get(0) == hightE.children.get(f)) {
                                 hightE.children.remove(f);
@@ -99,35 +111,47 @@ public class SoftCompare {
                         }
                     }
 
+                    if (lessE.getLastChildren().size() <= 1) {
+                        for (int f = 0; f < lessE.children.size(); f++) {
+                            if (lessE.getLastChildren().get(0) == lessE.children.get(f)) {
+                                lessE.children.remove(f);
+                                lessE.mainElement = lessE.getLastChildren().get(0);
+                            }
+                        }
+                    }
+
                     hightE.addChildren();
                     lessE.addChildren();
 
-                    while (hightE.getLastChildren().size() == 0){
-                        hightE.remove(hightE.size() -1);
+                    while (hightE.getLastChildren().size() == 0) {
+                        hightE.remove(hightE.size() - 1);
+                        System.out.println("here5");
                     }
 
-                    while (lessE.getLastChildren().size() == 0){
-                        lessE.remove(hightE.size() -1);
+                    while (lessE.getLastChildren().size() == 0) {
+                        lessE.remove(lessE.size() - 1);
+                        System.out.println("here6");
                     }
 
-                    if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0){
+                    if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0) {
                         hightE.createMultiDifference(0);
                         lessE.appendChange(hightE.getLastChildren().get(0).toString());
-                    }else if (hightE.getLastChildren().get(0).children().size() > 0 &&
-                             lessE.getLastChildren().get(0).children().size() > 0) {
-                         while (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() > 0 &&
-                                 hightE.getLastChildren().get(0).children().size() > 0 && lessE.getLastChildren().get(0).children().size() > 0) {
-                             handleChildren(hightE);
-                             handleChildren(lessE);
+                    } else if (hightE.getLastChildren().get(0).children().size() > 0 &&
+                            lessE.getLastChildren().get(0).children().size() > 0) {
+                        while (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() > 0 &&
+                                hightE.getLastChildren().get(0).children().size() > 0 && lessE.getLastChildren().get(0).children().size() > 0) {
+                            handleChildren(hightE);
+                            System.out.println("here2");
+                            handleChildren(lessE);
 
-                             hightE.addChildren();
-                             lessE.addChildren();
-                         }
-                         if (hightE.getLastChildren().size() > 0 && hightE.getLastChildren().get(0).children().size() > 0) {
-                             hightE.createMultiDifference(0);
-                             lessE.appendChange(hightE.getLastChildren().get(0).toString());
-                         }
-                     }
+                            hightE.addChildren();
+                            lessE.addChildren();
+                        }
+                        if (hightE.getLastChildren().size() > 0 && hightE.getLastChildren().get(0).children().size() > 0) {
+                            hightE.createMultiDifference(0);
+                            lessE.appendChange(hightE.getLastChildren().get(0).toString());
+                        }
+                    }
 
                     if (!hightE.mainElement.ownText().isEmpty() && hightE.mainElement.parents().size() > 0 &&
                             !hightE.mainElement.ownText().equals(lessE.mainElement.ownText()) &&
@@ -135,7 +159,7 @@ public class SoftCompare {
                         hightE.createMultiDifference(lessE.mainElement, 0);
                     }
 
-                    if(hightE.getLastChildren().size() != lessE.getLastChildren().size()){
+                    if (hightE.getLastChildren().size() != lessE.getLastChildren().size()) {
                         break;
                     }
                 }
@@ -189,28 +213,60 @@ public class SoftCompare {
                                 }
                             }
                         }
-                    }else if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0){
-                         clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
-                         is = findChildren(clone, hightE.mainElement);
+                    } else if (hightE.getLastChildren().size() > 0 && lessE.getLastChildren().size() == 0) {
+                        clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                        is = findChildren(clone, hightE.mainElement);
                         hightE.createMultiDifference(is);
                         hightE.getLastChildren().remove(0);
-                    } else if(!hightE.getLastChildren().get(0).text().equals(lessE.getLastChildren().get(0).text())){
-                            clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
-                            is = findChildren(clone, hightE.mainElement);
-                            hightE.createMultiDifference(is);
-                            hightE = (HighterElement) sortMainE(hightE, is);
-                            updateChildren(hightE, hightE.mainElement);
-                            hightE.getLastChildren().remove(0);
-                    }else {
+                    } else if (!hightE.getLastChildren().get(0).text().equals(lessE.getLastChildren().get(0).text())) {
+                        clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                        is = findChildren(clone, hightE.mainElement);
+                        hightE.createMultiDifference(is);
+                        hightE = (HighterElement) sortMainE(hightE, is);
+                        updateChildren(hightE, hightE.mainElement);
+                        hightE.getLastChildren().remove(0);
+                    } else {
                         //Deleting arrays in last children
                         hightE.getLastChildren().remove(0);
                         if (lessE.getLastChildren().size() > 0) {
                             lessE.getLastChildren().remove(0);
                         }
                     }
-                }else if (hightE.size() > 2) {
-                    //Deleting all 1 main arrays
+                } else if (hightE.size() > 2 && lessE.getLastChildren().size() == hightE.getLastChildren().size()  ) {
+                    for (int k = hightE.size() - 1; k > 1; k--) {
+                        if (hightE.size() == lessE.size() && hightE.get(k).size() == lessE.get(k).size()) {
+                            if (hightE.get(k).size() > 0) {
+                                System.out.println(hightE.size());
+                                for (int k2 = hightE.get(k).size() - 1; k2 >= 0; k2--) {
+                                    Element heightened = hightE.get(k).get(k2);
+                                    Element lesserned = lessE.get(k).get(k2);
+                                    if (!heightened.ownText().isEmpty() && heightened.parents().size() > 0 &&
+                                            !heightened.ownText().equals(lesserned.ownText()) &&
+                                            hightE.get(k).size() == lessE.get(k).size()) {
+                                        Element mainElementParent = heightened.parent();
+                                        hightE.mainElement = heightened;
+                                        ArrayList<Element> clone = (ArrayList<Element>) fixChildren(hightE.cloneE(), mainElementParent).getLastChildren().clone();
+                                        int is = findChildren(clone, heightened);
+                                        hightE.createMultiDifference(lesserned, is);
+                                        sortMainE(hightE, is);
+                                        updateChildren(hightE, hightE.mainElement);
+                                        hightE.get(k).remove(k2);
+                                        lessE.get(k).remove(k2);
+                                    } else {
+                                        hightE.get(k).remove(k2);
+                                        lessE.get(k).remove(k2);
+                                    }
+                                }
+                            } else {
+                                hightE.remove(k);
+                                lessE.remove(k);
+                            }
+                        } else {
+                            break;
+                        }
+                    }
                     while (hightE.getLastChildren().size() < 2 && !hightE.getLastChildren().equals(hightE.get(1))) {
+                        System.out.println("here7");
                         hightE.remove(hightE.size() - 1);
                         if (lessE.getLastChildren().size() < 2) {
                             lessE.remove(lessE.size() - 1);
@@ -224,9 +280,15 @@ public class SoftCompare {
                     }
                 }
 
-                if (hightE.get(1).size() == 0 && hightE.size() < 3) {
-                    hightE.remove(1);
+                while (hightE.getLastChildren().size() == 0){
+                    hightE.remove(hightE.size() -1 );
                 }
+
+                while (lessE.getLastChildren().size() == 0){
+                    lessE.remove(lessE.size() -1 );
+                }
+
+                System.out.println("here");
 
                 //Creating difference Html
                 if (hightE.size() > 1) {
@@ -294,7 +356,7 @@ public class SoftCompare {
                 }
                 lessE.changeMainElement();
             } else if (lessE.getMainESize() == 1) {
-                lessE.addChildren(lessE.mainElement);
+                lessE.addChildren(lessE.mainElement.child(0));
                 lessE.changeMainElement();
             }
     }

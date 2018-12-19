@@ -4,14 +4,12 @@
     <list default="true" id="88ed814d-ed50-4ecd-865b-ec32b36d8775" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/HighterElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/HighterElement.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/LesserElement.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/LesserElement.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/SoftCompare.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/main/java/SoftCompare.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/resources/chapter2.html" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/BasicSoftCompareTest/resources/chapter2.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/resources/difference.html" beforeDir="false" afterPath="$PROJECT_DIR$/resources/difference.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/HighterElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/HighterElement.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/LesserElement.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/LesserElement.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/SoftCompare.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/SoftCompare.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/resources/chapter2.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/resources/chapter2.html" beforeDir="false" afterPath="$PROJECT_DIR$/src/resources/chapter2.html" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -22,15 +20,15 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="CoverageDataManager">
-    <SUITE FILE_PATH="coverage/BasicSoftCompareTest$Test.ic" NAME="Test Coverage Results" MODIFIED="1542108876562" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
+    <SUITE FILE_PATH="coverage/BasicSoftCompareTest$Test.ic" NAME="Test Coverage Results" MODIFIED="1542713533735" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="SoftCompare.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="SoftCompare.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/SoftCompare.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="30">
-              <caret line="107" selection-start-line="107" selection-end-line="107" />
+            <state relative-caret-position="231">
+              <caret line="67" selection-start-line="67" selection-end-line="67" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -41,8 +39,8 @@
       <file leaf-file-name="HighterElement.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/HighterElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="75">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state>
+              <caret column="18" lean-forward="true" selection-start-column="18" selection-end-column="18" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -53,7 +51,7 @@
       <file leaf-file-name="LesserElement.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/LesserElement.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="15">
+            <state relative-caret-position="90">
               <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -62,11 +60,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="chapter2.html" pinned="false" current-in-tab="true">
+      <file leaf-file-name="chapter2.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="480">
-              <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+            <state>
+              <caret lean-forward="true" />
             </state>
           </provider>
         </entry>
@@ -74,25 +72,15 @@
       <file leaf-file-name="chapter1.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/resources/chapter1.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="225">
-              <caret line="15" column="34" selection-end-line="32" />
+            <state relative-caret-position="108">
+              <caret line="19" column="81" lean-forward="true" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
             </state>
           </provider>
         </entry>
       </file>
       <file leaf-file-name="difference.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/resources/difference.html">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="465">
-              <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-              <folding>
-                <element signature="e#169#175#0" expanded="true" />
-                <element signature="e#177#183#0" expanded="true" />
-                <element signature="e#412#418#0" expanded="true" />
-                <element signature="e#2189#2195#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
+          <provider selected="true" editor-type-id="text-editor" />
         </entry>
       </file>
     </leaf>
@@ -122,6 +110,12 @@
       <find>System</find>
       <find>updateChildren</find>
       <find>System.out</find>
+      <find>while</find>
+      <find>here3</find>
+      <find>here4</find>
+      <find>k2</find>
+      <find>here7</find>
+      <find>updatechildren</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -136,12 +130,12 @@
         <option value="$PROJECT_DIR$/src/main/java/LesserElements.java" />
         <option value="$PROJECT_DIR$/src/main/java/HighterElements.java" />
         <option value="$PROJECT_DIR$/src/main/java/Nothing.java" />
-        <option value="$PROJECT_DIR$/src/main/java/HighterElement.java" />
         <option value="$PROJECT_DIR$/src/resources/chapter1.html" />
         <option value="$PROJECT_DIR$/src/main/java/LesserElement.java" />
         <option value="$PROJECT_DIR$/resources/difference.html" />
-        <option value="$PROJECT_DIR$/src/main/java/SoftCompare.java" />
+        <option value="$PROJECT_DIR$/src/main/java/HighterElement.java" />
         <option value="$PROJECT_DIR$/src/resources/chapter2.html" />
+        <option value="$PROJECT_DIR$/src/main/java/SoftCompare.java" />
       </list>
     </option>
   </component>
@@ -157,7 +151,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="PackagesPane" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -191,6 +184,7 @@
           <select />
         </subPane>
       </pane>
+      <pane id="PackagesPane" />
       <pane id="Scope" />
     </panes>
   </component>
@@ -281,29 +275,28 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="27" width="1366" height="741" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49926794" weight="0.33870968" />
       <window_info anchor="right" id="Palette&#9;" order="3" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.2635432" side_tool="true" weight="0.42580646" />
       <window_info anchor="right" id="Maven Projects" order="4" />
-      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47657394" weight="0.31612903" />
+      <window_info anchor="bottom" id="Run" order="2" sideWeight="0.47657394" weight="0.32258064" />
       <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="right" id="Coverage" order="5" side_tool="true" visible="true" weight="0.02489019" />
       <window_info anchor="bottom" id="Terminal" order="7" />
       <window_info id="Designer" order="2" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24963397" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7364568" weight="0.5322581" />
+      <window_info anchor="bottom" id="Debug" order="3" sideWeight="0.7364568" weight="0.43548387" />
       <window_info id="Favorites" order="3" side_tool="true" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="right" id="Coverage" order="5" side_tool="true" visible="true" weight="0.0036603222" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Find" order="1" sideWeight="0.49853587" weight="0.32903227" />
-      <window_info anchor="bottom" id="Messages" order="10" sideWeight="0.49926794" weight="0.33870968" />
     </layout>
   </component>
   <component name="VcsContentAnnotationSettings">
@@ -320,21 +313,297 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
-          <line>96</line>
+          <line>236</line>
           <properties />
-          <option name="timeStamp" value="2059" />
+          <option name="timeStamp" value="2187" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
-          <line>101</line>
+          <line>237</line>
           <properties />
-          <option name="timeStamp" value="2065" />
+          <option name="timeStamp" value="2188" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>238</line>
+          <properties />
+          <option name="timeStamp" value="2189" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>240</line>
+          <properties />
+          <option name="timeStamp" value="2192" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>239</line>
+          <properties />
+          <option name="timeStamp" value="2193" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>241</line>
+          <properties />
+          <option name="timeStamp" value="2194" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>242</line>
+          <properties />
+          <option name="timeStamp" value="2195" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>243</line>
+          <properties />
+          <option name="timeStamp" value="2196" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>244</line>
+          <properties />
+          <option name="timeStamp" value="2197" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>245</line>
+          <properties />
+          <option name="timeStamp" value="2198" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>246</line>
+          <properties />
+          <option name="timeStamp" value="2199" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>247</line>
+          <properties />
+          <option name="timeStamp" value="2201" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>248</line>
+          <properties />
+          <option name="timeStamp" value="2202" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>249</line>
+          <properties />
+          <option name="timeStamp" value="2203" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>250</line>
+          <properties />
+          <option name="timeStamp" value="2204" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>251</line>
+          <properties />
+          <option name="timeStamp" value="2205" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>252</line>
+          <properties />
+          <option name="timeStamp" value="2206" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>253</line>
+          <properties />
+          <option name="timeStamp" value="2208" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>254</line>
+          <properties />
+          <option name="timeStamp" value="2209" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>255</line>
+          <properties />
+          <option name="timeStamp" value="2210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>256</line>
+          <properties />
+          <option name="timeStamp" value="2211" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>257</line>
+          <properties />
+          <option name="timeStamp" value="2212" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>259</line>
+          <properties />
+          <option name="timeStamp" value="2214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>260</line>
+          <properties />
+          <option name="timeStamp" value="2215" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>261</line>
+          <properties />
+          <option name="timeStamp" value="2216" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>264</line>
+          <properties />
+          <option name="timeStamp" value="2217" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>263</line>
+          <properties />
+          <option name="timeStamp" value="2219" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>262</line>
+          <properties />
+          <option name="timeStamp" value="2220" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>265</line>
+          <properties />
+          <option name="timeStamp" value="2221" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>267</line>
+          <properties />
+          <option name="timeStamp" value="2222" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>272</line>
+          <properties />
+          <option name="timeStamp" value="2225" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>271</line>
+          <properties />
+          <option name="timeStamp" value="2226" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>269</line>
+          <properties />
+          <option name="timeStamp" value="2227" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>270</line>
+          <properties />
+          <option name="timeStamp" value="2228" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>273</line>
+          <properties />
+          <option name="timeStamp" value="2229" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>274</line>
+          <properties />
+          <option name="timeStamp" value="2231" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>275</line>
+          <properties />
+          <option name="timeStamp" value="2232" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>276</line>
+          <properties />
+          <option name="timeStamp" value="2233" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>278</line>
+          <properties />
+          <option name="timeStamp" value="2234" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>277</line>
+          <properties />
+          <option name="timeStamp" value="2235" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>235</line>
+          <properties />
+          <option name="timeStamp" value="2236" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>67</line>
+          <properties />
+          <option name="timeStamp" value="2245" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>62</line>
+          <properties />
+          <option name="timeStamp" value="2267" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>60</line>
+          <properties />
+          <option name="timeStamp" value="2268" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>58</line>
+          <properties />
+          <option name="timeStamp" value="2269" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>61</line>
+          <properties />
+          <option name="timeStamp" value="2270" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>59</line>
+          <properties />
+          <option name="timeStamp" value="2271" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/SoftCompare.java</url>
+          <line>57</line>
+          <properties />
+          <option name="timeStamp" value="2272" />
         </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="2067" />
+      <option name="time" value="2273" />
     </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
@@ -349,13 +618,6 @@
     </watches-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/resources/difference.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="120">
-          <caret line="8" column="7" selection-start-line="8" selection-start-column="7" selection-end-line="8" selection-end-column="7" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1230">
@@ -614,13 +876,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="jar://$PROJECT_DIR$/../FancyDiff-HTML/target/jsoup-1.11.3.jar!/org/jsoup/nodes/Element.class">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="63">
-          <caret line="153" column="25" selection-start-line="153" selection-start-column="25" selection-end-line="153" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-1.8.0-openjdk/jre/lib/rt.jar!/java/io/FileOutputStream.class">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="112">
@@ -642,42 +897,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/HighterElement.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="75">
-          <caret line="6" selection-start-line="6" selection-end-line="6" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/resources/difference.html">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="465">
-          <caret line="31" column="9" selection-start-line="31" selection-start-column="9" selection-end-line="31" selection-end-column="9" />
-          <folding>
-            <element signature="e#169#175#0" expanded="true" />
-            <element signature="e#177#183#0" expanded="true" />
-            <element signature="e#412#418#0" expanded="true" />
-            <element signature="e#2189#2195#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/SoftCompare.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="30">
-          <caret line="107" selection-start-line="107" selection-end-line="107" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/LesserElement.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="15">
+        <state relative-caret-position="90">
           <caret line="9" column="11" selection-start-line="9" selection-start-column="11" selection-end-line="9" selection-end-column="11" />
           <folding>
             <element signature="imports" expanded="true" />
@@ -685,17 +907,54 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/resources/chapter1.html">
+    <entry file="jar://$PROJECT_DIR$/../FancyDiff-HTML/target/jsoup-1.11.3.jar!/org/jsoup/nodes/Element.class">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="225">
-          <caret line="15" column="34" selection-end-line="32" />
+        <state relative-caret-position="6765">
+          <caret line="637" selection-start-line="637" selection-end-line="637" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://$USER_HOME$/.ideaLibSources/jsoup-1.11.3-sources.jar!/org/jsoup/nodes/Element.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-39">
+          <caret line="1103" column="24" selection-start-line="1103" selection-start-column="24" selection-end-line="1103" selection-end-column="24" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/HighterElement.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="18" lean-forward="true" selection-start-column="18" selection-end-column="18" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/resources/chapter2.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="480">
-          <caret line="32" lean-forward="true" selection-start-line="32" selection-end-line="32" />
+        <state>
+          <caret lean-forward="true" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/resources/difference.html">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/resources/chapter1.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="108">
+          <caret line="19" column="81" lean-forward="true" selection-start-line="19" selection-start-column="81" selection-end-line="19" selection-end-column="81" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/SoftCompare.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="231">
+          <caret line="67" selection-start-line="67" selection-end-line="67" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
